@@ -1,4 +1,5 @@
 #include "usart.h"
+#include "main.h"
 #include <stdarg.h>
 #include <string.h>
 
@@ -24,6 +25,15 @@ static void NVIC_Configuration(void)
 	
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;                   // 使能中断
   NVIC_Init(&NVIC_InitStructure);                                   // 初始化配置NVIC
+	
+//	// IMU通信串口中断初始化
+//	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);                   // 嵌套向量中断控制器组选择
+//  NVIC_InitStructure.NVIC_IRQChannel = IMU_USART_IRQ;               // 配置USART为中断源
+//  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;         // 抢断优先
+//  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 8;                // 子优先级
+//	
+//  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;                   // 使能中断
+//  NVIC_Init(&NVIC_InitStructure);                                   // 初始化配置NVIC
 }
 
 
@@ -58,6 +68,19 @@ void USART_Config(void)
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;             // 将USART Rx的GPIO配置为浮空输入模式
 	GPIO_Init(NANO_USART_RX_GPIO_PORT, &GPIO_InitStructure);
 	
+//	// IMU通信 GPIO 配置
+//	IMU_USART_GPIO_APBxClkCmd(IMU_USART_GPIO_CLK, ENABLE);        // 打开串口GPIO的时钟
+//	IMU_USART_APBxClkCmd(IMU_USART_CLK, ENABLE);                  // 打开串口外设的时钟
+
+//	GPIO_InitStructure.GPIO_Pin = IMU_USART_TX_GPIO_PIN;
+//	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;                   // 将USART Tx的GPIO配置为推挽复用模式
+//	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+//	GPIO_Init(IMU_USART_TX_GPIO_PORT, &GPIO_InitStructure);
+
+//	GPIO_InitStructure.GPIO_Pin = IMU_USART_RX_GPIO_PIN;
+//	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;             // 将USART Rx的GPIO配置为浮空输入模式
+//	GPIO_Init(IMU_USART_RX_GPIO_PORT, &GPIO_InitStructure);
+	
 	
 	// 配置串口的工作参数
 	USART_InitTypeDef USART_InitStructure;
@@ -79,7 +102,7 @@ void USART_Config(void)
 	USART_Cmd(DEBUG_USARTx, ENABLE);	                                // 使能串口
 	
 	// nano通信串口配置
-	USART_InitStructure.USART_BaudRate = NANO_USART_BAUDRATE;        // 配置波特率
+	USART_InitStructure.USART_BaudRate = NANO_USART_BAUDRATE;         // 配置波特率
 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;       // 配置数据帧字长
 	USART_InitStructure.USART_StopBits = USART_StopBits_1;            // 配置停止位
 	USART_InitStructure.USART_Parity = USART_Parity_No ;              // 配置校验位
@@ -87,13 +110,30 @@ void USART_Config(void)
 	USART_HardwareFlowControl_None;
 	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;   // 配置工作模式，收发一起
 	
-	USART_Init(NANO_USARTx, &USART_InitStructure);                   // 完成串口的初始化配置
+	USART_Init(NANO_USARTx, &USART_InitStructure);                    // 完成串口的初始化配置
 	
 	NVIC_Configuration();                                             // 串口中断优先级配置
 	
-	USART_ITConfig(NANO_USARTx, USART_IT_RXNE, ENABLE);	            // 使能串口接收中断
+	USART_ITConfig(NANO_USARTx, USART_IT_RXNE, ENABLE);	              // 使能串口接收中断
 	
-	USART_Cmd(NANO_USARTx, ENABLE);	                                // 使能串口
+	USART_Cmd(NANO_USARTx, ENABLE);	                                  // 使能串口
+	
+//	// IMU通信串口配置
+//	USART_InitStructure.USART_BaudRate = IMU_USART_BAUDRATE;          // 配置波特率
+//	USART_InitStructure.USART_WordLength = USART_WordLength_8b;       // 配置数据帧字长
+//	USART_InitStructure.USART_StopBits = USART_StopBits_1;            // 配置停止位
+//	USART_InitStructure.USART_Parity = USART_Parity_No ;              // 配置校验位
+//	USART_InitStructure.USART_HardwareFlowControl =                   // 配置硬件流控制
+//	USART_HardwareFlowControl_None;
+//	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;   // 配置工作模式，收发一起
+//	
+//	USART_Init(IMU_USARTx, &USART_InitStructure);                     // 完成串口的初始化配置
+//	
+//	NVIC_Configuration();                                             // 串口中断优先级配置
+//	
+//	USART_ITConfig(IMU_USARTx, USART_IT_RXNE, ENABLE);	              // 使能串口接收中断
+//	
+//	USART_Cmd(IMU_USARTx, ENABLE);	                                  // 使能串口
 }
 
 
@@ -153,6 +193,61 @@ void UartWriteBuf(uint8_t *buf, uint8_t len)
 	while (len--) {
 		while ((USART1->SR & 0x40) == 0);
 		USART_SendData(USART1,*buf++);
+	}
+}
+
+// IMU写入指令
+void IMU_sendcmd(char cmd[])
+{
+	char i;
+	for(i=0; i<5; i++)
+		IMU_Put_Char(cmd[i]);
+}
+
+void IMU_Put_Char(unsigned char DataToSend)
+{
+	TxBuffer[imu_count++] = DataToSend;  
+  USART_ITConfig(IMU_USARTx, USART_IT_TXE, ENABLE);  
+}
+
+void IMU_Put_String(unsigned char *Str)
+{
+	while(*Str)
+	{
+		if(*Str=='\r')IMU_Put_Char(0x0d);
+			else if(*Str=='\n')IMU_Put_Char(0x0a);
+				else IMU_Put_Char(*Str);
+		Str++;
+	}
+}
+
+
+// 串口2中断调用函数，串口每收到一个数据，调用一次这个函数
+void CopeSerial2Data(unsigned char ucData)
+{
+	static unsigned char ucRxBuffer[250];
+	static unsigned char ucRxCnt = 0;	
+	
+	ucRxBuffer[ucRxCnt++]=ucData;	  // 将收到的数据存入缓冲区中
+	if (ucRxBuffer[0]!=0x55){        // 数据头不对，则重新开始寻找0x55数据头
+		ucRxCnt=0;
+		return;
+	}
+	if (ucRxCnt<11) {return;}       // 数据不满11个，则返回
+	else{
+		switch(ucRxBuffer[1]){        // 判断数据是哪种数据，然后将其拷贝到对应的结构体中，有些数据包需要通过上位机打开对应的输出后，才能接收到这个数据包的数据
+			case 0x50:	memcpy(&stcTime,&ucRxBuffer[2],8);;break;  // memcpy为编译器自带的内存拷贝函数，将接收缓冲区的字符拷贝到数据结构体里面，实现数据的解析。
+			case 0x51:	memcpy(&stcAcc,&ucRxBuffer[2],8);break;
+			case 0x52:	memcpy(&stcGyro,&ucRxBuffer[2],8);break;
+			case 0x53:	memcpy(&stcAngle,&ucRxBuffer[2],8);break;
+			case 0x54:	memcpy(&stcMag,&ucRxBuffer[2],8);break;
+			case 0x55:	memcpy(&stcDStatus,&ucRxBuffer[2],8);break;
+			case 0x56:	memcpy(&stcPress,&ucRxBuffer[2],8);break;
+			case 0x57:	memcpy(&stcLonLat,&ucRxBuffer[2],8);break;
+			case 0x58:	memcpy(&stcGPSV,&ucRxBuffer[2],8);break;
+			case 0x59:	memcpy(&stcQ,&ucRxBuffer[2],8);break;
+		}
+		ucRxCnt=0;                    // 清空缓存区
 	}
 }
 

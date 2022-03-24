@@ -132,6 +132,40 @@ void PendSV_Handler(void)
 {
 }
 
+
+// IMU中断读取数据
+void IMU_USART_IRQHandler(void)
+{
+	USART_ClearITPendingBit(IMU_USARTx, USART_IT_TXE);
+	USART_ClearITPendingBit(IMU_USARTx, USART_IT_RXNE);
+	
+	if(USART_GetITStatus(IMU_USARTx, USART_IT_TXE) != RESET)
+  { 
+    USART_SendData(IMU_USARTx, TxBuffer[TxCounter++]); 
+    USART_ClearITPendingBit(IMU_USARTx, USART_IT_TXE);
+    if(TxCounter == imu_count) USART_ITConfig(IMU_USARTx, USART_IT_TXE, DISABLE);
+  }
+	else if(USART_GetITStatus(IMU_USARTx, USART_IT_RXNE) != RESET)       // 接收中断
+  {
+		GPIO_Low(RED_GPIO_PORT, RED_GPIO_PIN);           // 打开白灯
+		GPIO_Low(GREEN_GPIO_PORT, GREEN_GPIO_PIN);
+		GPIO_Low(BLUE_GPIO_PORT, BLUE_GPIO_PIN);
+		
+		CopeSerial2Data((unsigned char)IMU_USARTx->DR);                    // 处理数据
+		USART_ClearITPendingBit(IMU_USARTx, USART_IT_RXNE);
+  }
+	
+	USART_ClearITPendingBit(IMU_USARTx, USART_IT_ORE);
+}
+
+
+// NANO中断读取数据
+void NANO_USART_IRQHandler(void)
+{
+	
+}
+
+
 /**
   * @brief  This function handles SysTick Handler.
   * @param  None

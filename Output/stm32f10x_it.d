@@ -35,6 +35,7 @@
 ..\..\output\stm32f10x_it.o: ..\..\User\SysTick\systick.h
 ..\..\output\stm32f10x_it.o: ..\..\User\AdvanceTim\AdvanceTim.h
 ..\..\output\stm32f10x_it.o: ..\..\User\USART\usart.h
+..\..\output\stm32f10x_it.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 ..\..\output\stm32f10x_it.o: ..\..\User\./lcd/bsp_ili9341_lcd.h
 ..\..\output\stm32f10x_it.o: ..\..\User\./font/fonts.h
 ..\..\output\stm32f10x_it.o: ..\..\User\./font/fonts.h

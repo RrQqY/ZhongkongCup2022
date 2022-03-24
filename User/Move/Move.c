@@ -468,7 +468,7 @@ void SlideOut(void)
 {
   GPIO_Low(SLIDE_GPIO_PORT, SLIDE_GPIO_PIN);              // 滑轨 Low 向前，High 向后
 	Set_Speed(SLIDE_PWM, 80);
-	SysTick_Delay_ms(1000);
+	SysTick_Delay_ms(1500);
 	Set_Speed(SLIDE_PWM, 0);
 }
 
@@ -478,7 +478,7 @@ void SlideIn(void)
 {
   GPIO_High(SLIDE_GPIO_PORT, SLIDE_GPIO_PIN);              // 滑轨 Low 向前，High 向后
 	Set_Speed(SLIDE_PWM, 80);
-	SysTick_Delay_ms(1000);
+	SysTick_Delay_ms(1500);
 	Set_Speed(SLIDE_PWM, 0);
 }
 
@@ -490,19 +490,21 @@ void Catch(void)
 	MoveSrv15(0);                  // 翻斗放下
 	Delay(500);
 	
-	MoveSrv1(1);                   // 上层三个抓臂伸出
+	MoveSrv1(1);                   // 抓臂伸出
 	MoveSrv2(1);
 	MoveSrv3(1);
-	MoveSrv4(1);                   // 下层三个抓臂伸出
+	MoveSrv4(1);
 	MoveSrv5(1);
 	MoveSrv6(1);
+	Delay(500);
 	
 	SlideOut();                    // 滑轨伸出    
+	Delay(1500);
 	
-	MoveSrv1(0);                   // 上层三个抓臂收回
+	MoveSrv1(0);                   // 抓臂收回
 	MoveSrv2(0);
 	MoveSrv3(0);
-	MoveSrv4(0);                   // 下层三个抓臂收回
+	MoveSrv4(0);
 	MoveSrv5(0);
 	MoveSrv6(0);
 	Set_Speed(TRACK_PWM, 128);     // 履带开始运动
@@ -510,7 +512,7 @@ void Catch(void)
 	
 	MoveSrv7(0);                   // 上层臂放下 
 	MoveSrv15(1);                  // 翻斗抬起
-	Delay(500);
+	Delay(750);
 	
 	Set_Speed(TRACK_PWM, 0);       // 履带停止运动
 	SlideIn();                     // 滑轨收回

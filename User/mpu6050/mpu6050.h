@@ -370,10 +370,8 @@
 #define MPU6050_DMP_MEMORY_BANK_SIZE    256
 #define MPU6050_DMP_MEMORY_CHUNK_SIZE   16
 
-void MPU6050ReadTemp(short *tempData);
 void MPU6050ReadGyro(short *gyroData);
 void MPU6050ReadAcc(short *accData);
-void MPU6050_ReturnTemp(float *Temperature);
 void MPU6050_Init(void);
 uint8_t MPU6050ReadID(void);
 void PMU6050_ReadData(u8 reg_add,unsigned char*Read,u8 num);

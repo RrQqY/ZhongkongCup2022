@@ -34,6 +34,7 @@
 ..\..\output\i2c.o: ..\..\User\SysTick\systick.h
 ..\..\output\i2c.o: ..\..\User\AdvanceTim\AdvanceTim.h
 ..\..\output\i2c.o: ..\..\User\USART\usart.h
+..\..\output\i2c.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 ..\..\output\i2c.o: ..\..\User\./lcd/bsp_ili9341_lcd.h
 ..\..\output\i2c.o: ..\..\User\./font/fonts.h
 ..\..\output\i2c.o: ..\..\User\./font/fonts.h

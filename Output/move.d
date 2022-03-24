@@ -35,6 +35,7 @@
 ..\..\output\move.o: ..\..\User\SysTick\systick.h
 ..\..\output\move.o: ..\..\User\AdvanceTim\AdvanceTim.h
 ..\..\output\move.o: ..\..\User\USART\usart.h
+..\..\output\move.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 ..\..\output\move.o: ..\..\User\./lcd/bsp_ili9341_lcd.h
 ..\..\output\move.o: ..\..\User\./font/fonts.h
 ..\..\output\move.o: ..\..\User\./font/fonts.h

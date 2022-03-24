@@ -35,6 +35,7 @@
 ..\..\output\mpu6050.o: ..\..\User\SysTick\systick.h
 ..\..\output\mpu6050.o: ..\..\User\AdvanceTim\AdvanceTim.h
 ..\..\output\mpu6050.o: ..\..\User\USART\usart.h
+..\..\output\mpu6050.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 ..\..\output\mpu6050.o: ..\..\User\./lcd/bsp_ili9341_lcd.h
 ..\..\output\mpu6050.o: ..\..\User\./font/fonts.h
 ..\..\output\mpu6050.o: ..\..\User\./font/fonts.h

@@ -92,27 +92,6 @@ void MPU6050ReadGyro(short *gyroData)
 }
 
 
-// 读取MPU6050的原始温度数据
-void MPU6050ReadTemp(short *tempData)
-{
-	u8 buf[2];
-    MPU6050_ReadData(MPU6050_RA_TEMP_OUT_H,buf,2);     //读取温度值
-    *tempData = (buf[0] << 8) | buf[1];
-}
-
-
-// 读取MPU6050的温度数据，转化成摄氏度
-void MPU6050_ReturnTemp(float *Temperature)
-{
-	short temp3;
-	u8 buf[2];
-	
-	MPU6050_ReadData(MPU6050_RA_TEMP_OUT_H,buf,2);     //读取温度值
-  temp3= (buf[0] << 8) | buf[1];	
-	*Temperature=((double) temp3/340.0)+36.53;
-}
-
-
 // 靠原始角速度数据计算角度
 void MPU6050_ReadAngle(short *angleData, int clearFlag)
 {

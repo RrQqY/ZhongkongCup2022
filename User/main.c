@@ -1,6 +1,7 @@
 /*---------------- 2022年17届中控杯购物赛总程序 ----------------*/
 
 #include <stdio.h>
+#include <string.h>
 #include "stm32f10x.h"
 
 #include "main.h"
@@ -11,6 +12,12 @@ __IO float Frequency_Left = 0;
 __IO float DutyCycle_Right = 0;
 __IO float Frequency_Right = 0;
 
+unsigned char TxBuffer[256];
+unsigned char TxCounter=0;
+unsigned char imu_count=0; 
+void CopeSerial2Data(unsigned char ucData);
+
+int IMU_Data;                         // IMU数据
 short Accel[3];                       // 陀螺仪加速度、角加速度、温度的全局变量
 short Gyro[3];
 float Temp;
@@ -18,6 +25,22 @@ float gyroX, gyroY, gyroZ;            // 三轴角速度的全局变量
 short Angle[3];                       // 陀螺仪角度的全局变量
 float integralX = 0.0f, integralY = 0.0f, integralZ = 0.0f;             // 累计偏角
 int g_GetZeroOffset = 0;
+
+char ACCCALSW[5] = {0XFF,0XAA,0X01,0X01,0X00};  // 进入加速度校准模式
+char SAVACALSW[5]= {0XFF,0XAA,0X00,0X00,0X00};  // 保存当前配置
+
+// IMU 信号类型定义
+struct STime		stcTime;
+struct SAcc 		stcAcc;
+struct SGyro 		stcGyro;
+struct SAngle 	stcAngle;
+struct SMag 		stcMag;
+struct SDStatus stcDStatus;
+struct SPress 	stcPress;
+struct SLonLat 	stcLonLat;
+struct SGPSV 		stcGPSV;
+struct SQ       stcQ;
+
 
 // 读取MPU6050数据标志
 // 置 1表示读取MPU6050数据完成，需要在主循环处理MPU6050数据
@@ -123,22 +146,55 @@ void start(void){
 //		                         Seven_Read(left, 7)));
 //		LCD_Printn(9, SevenTotal(Seven_Read(right, 1), 
 //		                         Seven_Read(right, 2), 
-//		                         Seven_Read(right, 3), 
+//		                                                                                                                                                                        Seven_Read(right, 3), 
 //	                           Seven_Read(right, 4), 
 //	                           Seven_Read(right, 5), 
 //	                           Seven_Read(right, 6), 
 //		                         Seven_Read(right, 7)));
 //	}
 
-	Forward(2);
-	Delay(500);
-	Right_MPU(90);
-	Delay(500);
-	Forward_Front(1);
-	Delay(500);
-	Left_MPU(90);
-	Delay(500);
-	Catch();
+//	Forward(2);
+//	Delay(500);
+//	Right_MPU(90);
+//	Delay(500);
+//	Forward_Front(1);
+//	Delay(500);
+//	Left_MPU(90);
+//	Delay(500);
+//	
+//	Catch();
+
+//	Delay(500);
+//	Left_MPU(90);
+//	Delay(500);
+//	Forward(1);
+//	Delay(500);
+//	Right_MPU(90);
+//	Delay(500);
+//	Forward(2);
+
+	MoveSrv13(1);
+	MoveSrv14(1);
+
+	
+//	Delay(2000); // 等等IMU初始化完成
+
+//	int i = 0;
+//	// 功能现象，20秒钟左右会进行一次加速度校准，加速度校准之后，XY角度会缓慢回到0度状态
+//	while(1){			
+//		Delay(1000);
+//		i++;
+//		if(i>20){
+//			i = 0;
+//			// 加速度校准 
+//			IMU_sendcmd(ACCCALSW);Delay(100);       // 等待模块内部自动校准好，模块内部会自动计算需要一定的时间
+//			IMU_sendcmd(SAVACALSW);Delay(100);      // 保存当前配置
+//		}
+//		//输出角度
+//		LCD_Printn(2, INT16_C((float)stcAngle.Angle[2]/32768*180));
+//		// printf("Angle:%.3f %.3f %.3f\r\n",(float)stcAngle.Angle[0]/32768*180,(float)stcAngle.Angle[1]/32768*180,(float)stcAngle.Angle[2]/32768*180);
+//		Delay(10);
+//	}//主循环
 }
 
 

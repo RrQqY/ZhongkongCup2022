@@ -10,9 +10,9 @@
 #define LEFTWHEEL_GPIO_CLK        RCC_APB2Periph_GPIOC
 
 // 底盘右电机转向
-#define RIGHTWHEEL_GPIO_PIN       GPIO_Pin_12
-#define RIGHTWHEEL_GPIO_PORT      GPIOC
-#define RIGHTWHEEL_GPIO_CLK       RCC_APB2Periph_GPIOC
+#define RIGHTWHEEL_GPIO_PIN       GPIO_Pin_7
+#define RIGHTWHEEL_GPIO_PORT      GPIOD
+#define RIGHTWHEEL_GPIO_CLK       RCC_APB2Periph_GPIOD
 
 //// 履带电机转向
 //#define TRACK_GPIO_PIN            GPIO_Pin_8

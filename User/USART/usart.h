@@ -1,6 +1,7 @@
 #ifndef __USART_H
 #define	__USART_H
 
+#include <string.h>
 #include "stm32f10x.h"
 #include "GPIO.h"
 
@@ -24,14 +25,15 @@
 #define  DEBUG_USART_IRQ                USART1_IRQn
 #define  DEBUG_USART_IRQHandler         USART1_IRQHandler
 
-// 串口2-USART2，NANO串口通信
-#define  NANO_USARTx                   USART2
-#define  NANO_USART_CLK                RCC_APB1Periph_USART2
+
+// 串口3-USART3，NANO串口通信
+#define  NANO_USARTx                   USART3
+#define  NANO_USART_CLK                RCC_APB1Periph_USART3
 #define  NANO_USART_APBxClkCmd         RCC_APB1PeriphClockCmd
 #define  NANO_USART_BAUDRATE           9600
 
-//// USART2 GPIO 引脚宏定义
-#define  NANO_USART_GPIO_CLK           (RCC_APB2Periph_GPIOA)
+//// USART3 GPIO 引脚宏定义
+#define  NANO_USART_GPIO_CLK           (RCC_APB2Periph_GPIOB)
 #define  NANO_USART_GPIO_APBxClkCmd    RCC_APB2PeriphClockCmd
     
 #define  NANO_USART_TX_GPIO_PORT       GPIOB   
@@ -39,28 +41,30 @@
 #define  NANO_USART_RX_GPIO_PORT       GPIOB
 #define  NANO_USART_RX_GPIO_PIN        GPIO_Pin_11
 
-// USART2 中断宏定义
-#define  NANO_USART_IRQ                USART2_IRQn
-#define  NANO_USART_IRQHandler         USART2_IRQHandler
-
-// 串口3-USART3
-//#define  DEBUG_USARTx                   USART3
-//#define  DEBUG_USART_CLK                RCC_APB1Periph_USART3
-//#define  DEBUG_USART_APBxClkCmd         RCC_APB1PeriphClockCmd
-//#define  DEBUG_USART_BAUDRATE           115200
-
-//// USART3 GPIO 引脚宏定义
-//#define  DEBUG_USART_GPIO_CLK           (RCC_APB2Periph_GPIOB)
-//#define  DEBUG_USART_GPIO_APBxClkCmd    RCC_APB2PeriphClockCmd
-//    
-//#define  DEBUG_USART_TX_GPIO_PORT       GPIOB   
-//#define  DEBUG_USART_TX_GPIO_PIN        GPIO_Pin_10
-//#define  DEBUG_USART_RX_GPIO_PORT       GPIOB
-//#define  DEBUG_USART_RX_GPIO_PIN        GPIO_Pin_11
-
 // USART3 中断宏定义
-//#define  DEBUG_USART_IRQ                USART3_IRQn
-//#define  DEBUG_USART_IRQHandler         USART3_IRQHandler
+#define  NANO_USART_IRQ                USART3_IRQn
+#define  NANO_USART_IRQHandler         USART3_IRQHandler
+
+
+// 串口5-USART2，IMU通信
+#define  IMU_USARTx                   UART5
+#define  IMU_USART_CLK                RCC_APB1Periph_UART5
+#define  IMU_USART_APBxClkCmd         RCC_APB1PeriphClockCmd
+#define  IMU_USART_BAUDRATE           9600
+
+// USART5 GPIO 引脚宏定义
+#define  IMU_USART_GPIO_CLK           (RCC_APB2Periph_GPIOC|RCC_APB2Periph_GPIOD)
+#define  IMU_USART_GPIO_APBxClkCmd    RCC_APB2PeriphClockCmd
+    
+#define  IMU_USART_TX_GPIO_PORT       GPIOC   
+#define  IMU_USART_TX_GPIO_PIN        GPIO_Pin_12
+#define  IMU_USART_RX_GPIO_PORT       GPIOD
+#define  IMU_USART_RX_GPIO_PIN        GPIO_Pin_2
+
+// USART5 中断宏定义
+#define  IMU_USART_IRQ                UART5_IRQn
+#define  IMU_USART_IRQHandler         UART5_IRQHandler
+
 
 // 串口4-UART4
 //#define  DEBUG_USARTx                   UART4
@@ -115,6 +119,7 @@
 #define GET_HIGH_BYTE(A) ((uint8_t)((A) >> 8))    //宏函数 获得A的高八位
 
 
+
 // 舵机驱动函数封装
 /* 1、2、3：上层臂右左中      1：展开750，折叠2500，2：展开800， 折叠：2600，4：展开650， 折叠：2600
 	 4、5、6：下层臂右左中      3：展开2200，折叠：450，5：展开2400，折叠：600，6：展开2350，折叠：400
@@ -147,6 +152,11 @@ void UartWriteBuf(uint8_t *buf, uint8_t len);                                 //
 void MoveServo(uint8_t servoID, uint16_t Time, uint16_t Position);            // 控制单个舵机转动
 void MoveServos(uint8_t Num, uint16_t Time, ...);                             // 控制多个舵机转动
 void NanoStart();                                                             // 向nano发送起始信号
+void IMU_Put_Char(unsigned char DataToSend);
+void IMU_sendcmd(char cmd[]);
+void IMU_Put_String(unsigned char *Str);
+void CopeSerial2Data(unsigned char ucData);
+void *memcpy(void *str1, const void *str2, size_t n);
 
 
 #endif
