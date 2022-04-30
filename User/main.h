@@ -37,11 +37,17 @@ extern short Angle[3];                   // 陀螺仪角度的全局变量
 extern float integralX, integralY, integralZ;             // 累计偏角
 extern int g_GetZeroOffset;              // 零偏
 extern int task_readdata_finish;         // 读取MPU6050数据标志
-
+extern int POS[6];                       // 上位机返回抓取位置信息
+extern uint8_t Nano_Buff[8];
+extern int flag_get;
+extern void NanoIOHigh();
 static void LCD_Test(void);	
 extern void LCD_Printn(int line, uint32_t num);            // LCD 屏显示数字
 extern void LCD_Prints(int line, char dispBuff[]);         // LCD 屏显示英文字符串
 extern uint16_t lcdid;
+extern uint8_t time_now;                                   // 开机到现在的运行时间
+
+extern void Test1();    // 第一次测试
 
 
 // IMU 宏定义

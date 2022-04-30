@@ -164,6 +164,32 @@
 #define RIGHTSEVEN7_GPIO_PORT     GPIOG
 #define RIGHTSEVEN7_GPIO_CLK      RCC_APB2Periph_GPIOG
 
+// NANO
+//     1
+#define NANO1_GPIO_PIN            GPIO_Pin_4
+#define NANO1_GPIO_PORT           GPIOA
+#define NANO1_GPIO_CLK            RCC_APB2Periph_GPIOA
+//     2
+#define NANO2_GPIO_PIN            GPIO_Pin_5
+#define NANO2_GPIO_PORT           GPIOA
+#define NANO2_GPIO_CLK            RCC_APB2Periph_GPIOA
+//     3
+#define NANO3_GPIO_PIN            GPIO_Pin_4
+#define NANO3_GPIO_PORT           GPIOC
+#define NANO3_GPIO_CLK            RCC_APB2Periph_GPIOC
+//     4
+#define NANO4_GPIO_PIN            GPIO_Pin_10
+#define NANO4_GPIO_PORT           GPIOD
+#define NANO4_GPIO_CLK            RCC_APB2Periph_GPIOD
+//     5
+#define NANO5_GPIO_PIN            GPIO_Pin_8
+#define NANO5_GPIO_PORT           GPIOD
+#define NANO5_GPIO_CLK            RCC_APB2Periph_GPIOD
+//     6
+#define NANO6_GPIO_PIN            GPIO_Pin_8
+#define NANO6_GPIO_PORT           GPIOF
+#define NANO6_GPIO_CLK            RCC_APB2Periph_GPIOF
+
 
 // 七路信号读取函数宏定义
 #define front    1 
@@ -184,5 +210,6 @@ void GPIO_High(GPIO_TypeDef * port, uint16_t pin);     // GPIO 引脚输出高电平
 void GPIO_Low(GPIO_TypeDef * port, uint16_t pin);      // GPIO 引脚输出高电平
 int  GPIO_Read(GPIO_TypeDef * port, uint16_t pin);     // GPIO 引脚读取
 int  Seven_Read(int s, int n);                         // 七路信号读取
+int  Nano_Read(int n);                                 // NANO信号读取
 
 #endif

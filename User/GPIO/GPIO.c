@@ -39,6 +39,12 @@ void GPIO_Config(void)
 	RCC_APB2PeriphClockCmd(RIGHTSEVEN5_GPIO_CLK, ENABLE);
 	RCC_APB2PeriphClockCmd(RIGHTSEVEN6_GPIO_CLK, ENABLE);
 	RCC_APB2PeriphClockCmd(RIGHTSEVEN7_GPIO_CLK, ENABLE);
+	RCC_APB2PeriphClockCmd(NANO1_GPIO_CLK, ENABLE);
+	RCC_APB2PeriphClockCmd(NANO2_GPIO_CLK, ENABLE);
+	RCC_APB2PeriphClockCmd(NANO3_GPIO_CLK, ENABLE);
+	RCC_APB2PeriphClockCmd(NANO4_GPIO_CLK, ENABLE);
+	RCC_APB2PeriphClockCmd(NANO5_GPIO_CLK, ENABLE);
+	RCC_APB2PeriphClockCmd(NANO6_GPIO_CLK, ENABLE);
 	
 	GPIO_InitTypeDef GPIO_InitStruct;                      // 定义初始化结构体
 	
@@ -131,6 +137,20 @@ void GPIO_Config(void)
 	GPIO_InitStruct.GPIO_Pin = RIGHTSEVEN7_GPIO_PIN;
 	GPIO_Init(RIGHTSEVEN7_GPIO_PORT, &GPIO_InitStruct);
 	
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_Out_PP;     // 浮空输入模式（NANO信号输入要浮空输入）
+	GPIO_InitStruct.GPIO_Pin = NANO1_GPIO_PIN;
+	GPIO_Init(NANO1_GPIO_PORT, &GPIO_InitStruct);
+	GPIO_InitStruct.GPIO_Pin = NANO2_GPIO_PIN;
+	GPIO_Init(NANO2_GPIO_PORT, &GPIO_InitStruct);
+	GPIO_InitStruct.GPIO_Pin = NANO3_GPIO_PIN;
+	GPIO_Init(NANO3_GPIO_PORT, &GPIO_InitStruct);
+	GPIO_InitStruct.GPIO_Pin = NANO4_GPIO_PIN;
+	GPIO_Init(NANO4_GPIO_PORT, &GPIO_InitStruct);
+	GPIO_InitStruct.GPIO_Pin = NANO5_GPIO_PIN;
+	GPIO_Init(NANO5_GPIO_PORT, &GPIO_InitStruct);
+	GPIO_InitStruct.GPIO_Pin = NANO6_GPIO_PIN;
+	GPIO_Init(NANO6_GPIO_PORT, &GPIO_InitStruct);
+	
 //	GPIO_SetBits(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN); // 全部输出低电平
 //  GPIO_SetBits(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);
 //	GPIO_SetBits(TRACK_GPIO_PORT, TRACK_GPIO_PIN);
@@ -213,4 +233,17 @@ int Seven_Read(int s, int n){
 		}
 		default: return 0; break;
 	}
+}
+
+
+// NANO信号读取
+int Nano_Read(int n){
+		switch(n){
+			case 1: return GPIO_Read(NANO1_GPIO_PORT, NANO1_GPIO_PIN); break;
+			case 2: return GPIO_Read(NANO2_GPIO_PORT, NANO2_GPIO_PIN); break;
+			case 3: return GPIO_Read(NANO3_GPIO_PORT, NANO3_GPIO_PIN); break;
+			case 4: return GPIO_Read(NANO4_GPIO_PORT, NANO4_GPIO_PIN); break;
+			case 5: return GPIO_Read(NANO5_GPIO_PORT, NANO5_GPIO_PIN); break;
+			case 6: return GPIO_Read(NANO6_GPIO_PORT, NANO6_GPIO_PIN); break;
+		}
 }

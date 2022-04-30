@@ -28,6 +28,10 @@ int g_GetZeroOffset = 0;
 
 char ACCCALSW[5] = {0XFF,0XAA,0X01,0X01,0X00};  // 进入加速度校准模式
 char SAVACALSW[5]= {0XFF,0XAA,0X00,0X00,0X00};  // 保存当前配置
+int POS[6] = {0,0,0,0,0,0};                     // 上位机返回抓取位置信息
+uint8_t Nano_Buff[8] = {0};
+int flag_get = 0;
+uint8_t time_now = 0;                           // 开机到现在的运行时间
 
 // IMU 信号类型定义
 struct STime		stcTime;
@@ -43,9 +47,60 @@ struct SQ       stcQ;
 
 
 // 读取MPU6050数据标志
-// 置 1表示读取MPU6050数据完成，需要在主循环处理MPU6050数据
-// 置 0表示未完成读取MPU6050数据，需要在中断中读取MPU6050数据
+// 置 1 表示读取MPU6050数据完成，需要在主循环处理MPU6050数据
+// 置 0 表示未完成读取MPU6050数据，需要在中断中读取MPU6050数据
 int task_readdata_finish = 0;
+
+
+// 第一次测试
+void Test1()
+{
+//	Forward(1);        // 巡线两格
+//  Delay(500);
+	NanoIOHigh();      // 第一次给Nano发信号，拍照片
+	Delay(1500);
+	Right_MPU(90);     // 右转
+	Delay(500); 
+	Forward_Front(1);  // 巡线一格（前灰度数线）
+	Delay(500);
+	Left_MPU(90);      // 左转
+	Delay(1000);
+	// 这里已经停到货架面前了
+	MoveSrv7(1);       // 上层臂抬起
+	MoveSrv15(0);      // 翻斗放下
+	Delay(500);
+	NanoIOHigh();      // 第二次给Nano发信号，爪子张开
+	Delay(500);
+	SlideOut();        // 滑轨向前移动
+	Delay(500);
+	NanoIOHigh();      // 第三次给Nano发信号，抓取
+	Delay(1000);
+	// 这里货物已经掉进翻斗了
+	TrackMove();       // 履带向后转动
+	Delay(800);
+	SlideIn();         // 滑轨向后移动收回
+	Delay(500);
+	MoveSrv15(1);      // 翻斗抬起
+	Delay(1500);
+	TrackStop();       // 履带停止转动
+	Delay(500);
+	MoveSrv7(0);       // 上层臂放下
+	Delay(500);
+	// 这里可以开始返回了
+	Right_MPU(90);      // 左转
+	Delay(500);
+	Back(1);        // 巡线一格
+	Delay(500);
+	Left_MPU(90);     // 右转
+	Delay(500);
+	
+  // 先转一段，跨过黑线
+	GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
+  GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
+  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed);
+  Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed);
+	Delay(400);
+}
 
 
 // 准备
@@ -54,8 +109,8 @@ void prepare(void){
   GPIO_Config();
 	ADVANCE_TIM_Init();
 	SysTick_Init();
-	ILI9341_Init ();                 // LCD 初始化    
-  ILI9341_GramScan(6);             // LCD 显示模式6
+//	ILI9341_Init ();                 // LCD 初始化    
+//  ILI9341_GramScan(6);             // LCD 显示模式6
 	USART_Config();                  // USART 初始化
 	i2c_GPIO_Config();               // I2C 初始化
 	MPU6050_Init();                  // MPU6050 初始化
@@ -66,11 +121,12 @@ void prepare(void){
 	Set_Speed(TRACK_PWM, 0);
 	Set_Speed(SLIDE_PWM, 0);
 	
-	// LCD 初始化并清屏
-	LCD_SetBackColor(BLACK);
-	LCD_SetFont(&Font8x16);          // 设置字体
-	LCD_SetColors(WHITE,BLACK);      // 设置颜色。形参1为前景色（字体颜色），形参2为背景色
-  ILI9341_Clear(0,0,LCD_X_LENGTH,LCD_Y_LENGTH);
+	GPIO_Low(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
+//	// LCD 初始化并清屏
+//	LCD_SetBackColor(BLACK);
+//	LCD_SetFont(&Font8x16);          // 设置字体
+//	LCD_SetColors(WHITE,BLACK);      // 设置颜色。形参1为前景色（字体颜色），形参2为背景色
+//  ILI9341_Clear(0,0,LCD_X_LENGTH,LCD_Y_LENGTH);
 }
 
 
@@ -153,10 +209,34 @@ void start(void){
 //		                         Seven_Read(right, 7)));
 //	}
 
-//	Forward(2);
+	MoveSrv13(0);
+	MoveSrv14(0);
+	Delay(1000);
+	Back(2);        // 巡线两格
+	Delay(500);
+	Right_MPU(90);     // 右转
+	Delay(500);
+	Back(1);        // 巡线两格
+	Delay(500);
+	Right_MPU(90);     // 右转
+	Delay(500);
+	Back(1);        // 巡线两格
+	Delay(1500);
+	
+	Test1();
+	
+	Forward(1);        // 巡线一格
+	Test1();
+	
+	Delay(1000);
+	Back(5);        // 巡线两格
+	
+	
+//  NanoIOHigh();
+//	Forward(1);
 //	Delay(500);
 //	Right_MPU(90);
-//	Delay(500);
+//	Delay(500); 
 //	Forward_Front(1);
 //	Delay(500);
 //	Left_MPU(90);
@@ -173,28 +253,62 @@ void start(void){
 //	Delay(500);
 //	Forward(2);
 
-	MoveSrv13(1);
-	MoveSrv14(1);
-
+//	NanoStart();
+//  Usart_SendString(DEBUG_USARTx, "heyhey");
+//	Delay(1000);
 	
-//	Delay(2000); // 等等IMU初始化完成
+//	MoveSrv1(0);                   // 抓臂收回
+//	MoveSrv2(0);
+//	MoveSrv3(0);
+//	MoveSrv4(0);
+//	MoveSrv5(0);
+//	MoveSrv6(0);
+//	Delay(1000);
+//	NanoCatch();
 
-//	int i = 0;
-//	// 功能现象，20秒钟左右会进行一次加速度校准，加速度校准之后，XY角度会缓慢回到0度状态
-//	while(1){			
-//		Delay(1000);
-//		i++;
-//		if(i>20){
-//			i = 0;
-//			// 加速度校准 
-//			IMU_sendcmd(ACCCALSW);Delay(100);       // 等待模块内部自动校准好，模块内部会自动计算需要一定的时间
-//			IMU_sendcmd(SAVACALSW);Delay(100);      // 保存当前配置
-//		}
-//		//输出角度
-//		LCD_Printn(2, INT16_C((float)stcAngle.Angle[2]/32768*180));
-//		// printf("Angle:%.3f %.3f %.3f\r\n",(float)stcAngle.Angle[0]/32768*180,(float)stcAngle.Angle[1]/32768*180,(float)stcAngle.Angle[2]/32768*180);
+//	Usart_SendByte( DEBUG_USARTx, 65);
+
+
+//  int time_flag = 0;
+//	int Nano1_sum, Nano2_sum, Nano3_sum, Nano4_sum, Nano5_sum, Nano6_sum = 0;
+//	double Nano1_res, Nano2_res, Nano3_res, Nano4_res, Nano5_res, Nano6_res = 0;		
+//	while(time_flag <= 100){
+//		Nano1_sum += Nano_Read(1);
+//		Nano2_sum += Nano_Read(2);
+//		Nano3_sum += Nano_Read(3);
+//		Nano4_sum += Nano_Read(4);
+//		Nano5_sum += Nano_Read(5);
+//		Nano6_sum += Nano_Read(6);
+//		
+//		time_flag ++;
 //		Delay(10);
-//	}//主循环
+//	}
+//	Nano1_res = Nano1_sum * 0.01;
+//	Nano2_res = Nano2_sum * 0.01;
+//	Nano3_res = Nano3_sum * 0.01;
+//	Nano4_res = Nano4_sum * 0.01;
+//	Nano5_res = Nano5_sum * 0.01;
+//	Nano6_res = Nano6_sum * 0.01;
+//	
+//	if(Nano1_res >= 0.5){ MoveSrv1(1); }else{ MoveSrv1(0); }
+//	if(Nano2_res >= 0.5){ MoveSrv2(1); }else{ MoveSrv2(0); }
+//	if(Nano3_res >= 0.5){ MoveSrv3(1); }else{ MoveSrv3(0); }
+//	if(Nano4_res >= 0.5){ MoveSrv4(1); }else{ MoveSrv4(0); }
+//	if(Nano5_res >= 0.5){ MoveSrv5(1); }else{ MoveSrv5(0); }
+//	if(Nano6_res >= 0.5){ MoveSrv6(1); }else{ MoveSrv6(0); }
+
+//	while(1){
+//		if(Nano_Buff[1] == 0x12){
+//			GPIO_Low(GREEN_GPIO_PORT, GREEN_GPIO_PIN);    // 打开绿灯
+//			GPIO_Low(RED_GPIO_PORT, RED_GPIO_PIN);
+//			GPIO_Low(BLUE_GPIO_PORT, BLUE_GPIO_PIN);
+//		}
+//		else{
+//			GPIO_High(GREEN_GPIO_PORT, GREEN_GPIO_PIN);    // 打开绿灯
+//			GPIO_High(RED_GPIO_PORT, RED_GPIO_PIN);
+//			GPIO_High(BLUE_GPIO_PORT, BLUE_GPIO_PIN);
+//		}
+//	}
 }
 
 
@@ -218,6 +332,16 @@ int main(void)
   }
 	
 	return 0;
+}
+
+
+
+// 向Nano传递高电平IO信号
+void NanoIOHigh()
+{
+	GPIO_High(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
+	Delay(5);
+	GPIO_Low(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
 }
 
 

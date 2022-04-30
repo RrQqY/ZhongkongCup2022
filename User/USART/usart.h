@@ -30,7 +30,7 @@
 #define  NANO_USARTx                   USART3
 #define  NANO_USART_CLK                RCC_APB1Periph_USART3
 #define  NANO_USART_APBxClkCmd         RCC_APB1PeriphClockCmd
-#define  NANO_USART_BAUDRATE           9600
+#define  NANO_USART_BAUDRATE           115200
 
 //// USART3 GPIO 引脚宏定义
 #define  NANO_USART_GPIO_CLK           (RCC_APB2Periph_GPIOB)
@@ -126,7 +126,7 @@
 	 7：上层臂大舵机            7： 抬起1150，放下1550
 	 13、14：装夹臂左右         13：上翻1550，下翻550；
 															14：上翻650， 下翻1650；
-	 15：翻斗大舵机             15：上翻1450，下翻：550
+	 15：翻斗大舵机             15：上翻1450，下翻：600
 	*/
 #define MoveSrv1(up) up>0 ? MoveServo(1, 500, 750)  : MoveServo(1, 500, 2500)     // 上层臂右左中
 #define MoveSrv2(up) up>0 ? MoveServo(2, 500, 800)  : MoveServo(2, 500, 2600)
@@ -136,7 +136,7 @@
 #define MoveSrv6(up) up>0 ? MoveServo(6, 500, 2350) : MoveServo(6, 500, 400)
 
 #define MoveSrv7(up) up>0  ? MoveServo(7, 500, 1150) : MoveServo(7, 500, 1550)    // 上层臂大舵机
-#define MoveSrv15(up) up>0 ? MoveServo(15, 500, 1450) : MoveServo(15, 500, 550)   // 翻斗大舵机
+#define MoveSrv15(up) up>0 ? MoveServo(15, 500, 1450) : MoveServo(15, 500, 600)   // 翻斗大舵机
 
 #define MoveSrv13(up) up>0 ? MoveServo(13, 500, 1550) : MoveServo(13, 500, 550)   // 左装夹臂
 #define MoveSrv14(up) up>0 ? MoveServo(14, 500, 650)  : MoveServo(14, 500, 1650)  // 右装夹臂
@@ -157,6 +157,6 @@ void IMU_sendcmd(char cmd[]);
 void IMU_Put_String(unsigned char *Str);
 void CopeSerial2Data(unsigned char ucData);
 void *memcpy(void *str1, const void *str2, size_t n);
-
+void NanoCatch();
 
 #endif

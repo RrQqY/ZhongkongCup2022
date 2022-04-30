@@ -162,7 +162,38 @@ void IMU_USART_IRQHandler(void)
 // NANO中断读取数据
 void NANO_USART_IRQHandler(void)
 {
-	
+	static u8 Nano_Buffer[8] = {0x00};
+	static u8 Nano_Rx = 0;
+	if(USART_GetITStatus(NANO_USARTx,USART_IT_RXNE) != RESET){   // 中断产生 
+			GPIO_Low(GREEN_GPIO_PORT, GREEN_GPIO_PIN);    // 打开白灯
+			GPIO_Low(RED_GPIO_PORT, RED_GPIO_PIN);
+			GPIO_Low(BLUE_GPIO_PORT, BLUE_GPIO_PIN);
+		//if(flag_get == 0){
+			Nano_Buffer[Nano_Rx] = USART_ReceiveData(NANO_USARTx);     // 接收串口数据到buff缓冲区
+			Usart_SendByte(DEBUG_USARTx, Nano_Buffer[Nano_Rx]);
+			Nano_Rx++;
+			
+			// 两字节校验位检验
+			if(Nano_Buffer[0] != 0x11){
+				Nano_Rx = 0;
+			}
+			if((Nano_Rx == 2)&&(Nano_Buffer[1] != 0x12)){
+				Nano_Rx = 0;
+			}
+			
+//			if(Nano_Rx != 0){
+//				Usart_SendByte(DEBUG_USARTx, Nano_Buffer[Nano_Rx-1]);
+//			}
+			
+			// 如果接收到最大长度
+			if(Nano_Rx >= 8){
+				memcpy(Nano_Buff, Nano_Buffer, Nano_Rx);
+				Nano_Rx = 0;
+				flag_get = 1;         // 一次数据已经读取完
+			}
+//		}
+	}
+//	USART_ClearITPendingBit(NANO_USARTx,USART_IT_RXNE);        // 清除中断标志
 }
 
 
@@ -185,6 +216,9 @@ void SysTick_Handler(void)
 		
 		task_readdata_finish = 1; //标志位置1，表示需要在主循环处理MPU6050数据
   }
+	
+	/* 任务2：计算开机到现在的时间 */
+	time_now ++;
 }
 
 /******************************************************************************/

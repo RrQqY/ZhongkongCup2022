@@ -17,7 +17,7 @@
 #define RightTruningSpeed  70             // 右轮转向速度
 #define MPUTurningSpeed    65             // MPU转向速度
 #define FowardSpeed   78                  // 直行速度
-#define PreSlow       45                  // 数到线前提前减速
+#define PreSlow       48                  // 数到线前提前减速
 
 // PID参数宏定                              
 #define KP  10
@@ -36,7 +36,11 @@ void Left_MPU(int angle);            // 利用MPU6050左转
 void TrunTo_MPU(int angle);          // 利用MPU6050转到特定角度
 void SlideOut(void);                 // 伸出滑轨
 void SlideIn(void);                  // 收回滑轨
+void TrackMove(void);                // 履带转动
+void TrackStop(void);                // 履带停止
 void Catch(void);                    // 完成一次抓取
+void Back(int Line_Count);
+void PIDBack(void);
 
 
 #endif
