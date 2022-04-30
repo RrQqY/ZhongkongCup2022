@@ -25,9 +25,12 @@
 #define KD  0
 
 
+static int correct_count;           // 校准次数
+
+
 void PID(void);                      // PID 巡线
 void Forward(int Line_Count);        // 巡线直行 n 根线
-void Forward_Front(int Line_Count);
+void Forward_Front(int Line_Count);  // 巡线直行 n 根线（前七路数线）
 void Right(void);                    // 右转
 void Left(void);                     // 左转
 void Stop(void);                     // 停止
@@ -39,8 +42,8 @@ void SlideIn(void);                  // 收回滑轨
 void TrackMove(void);                // 履带转动
 void TrackStop(void);                // 履带停止
 void Catch(void);                    // 完成一次抓取
-void Back(int Line_Count);
-void PIDBack(void);
+void Back(int Line_Count);           // 后退巡线直行 n 根线
+void PIDBack(void);                  // 后退PID 巡线
 
 
 #endif

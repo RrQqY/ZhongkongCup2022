@@ -5,6 +5,9 @@
 #include <stdio.h>
 #include <stdlib.h>   
 
+static int correct_count = 0;
+
+
 // 履带转动
 void TrackMove(void)
 {
@@ -69,36 +72,46 @@ void Forward(int Line_Count) {
 			if ((Seven_Read(right, 7) == high) || (Seven_Read(right, 6) == high) || (Seven_Read(right, 5) == high)){
 				while(1){
 					Set_Speed(LEFTWHEEL_PWM_OUT, 0);
-						if(Seven_Read(right, 4) == high){
-              Set_Speed(LEFTWHEEL_PWM_OUT, 0);
-							Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
-							// 先转一段，跨过黑线
-							GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
-							GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
-							Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
-							Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
-							Delay(200);
+					correct_count ++;
+					if(correct_count > 2){    // 如果校准次数超过2次，则退出校准
+						break;
+					}
+					if(Seven_Read(right, 4) == high){
+						Set_Speed(LEFTWHEEL_PWM_OUT, 0);
+						Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
+						// 先转一段，跨过黑线
+						GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
+						GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
+						Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
+						Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
+						Delay(200);
 						break;
 					}
 				}
+				correct_count = 0;
 			}
 			// 如果右侧灰度后半部分检测到白线，说明右轮应该向后
 			else if ((Seven_Read(right, 3) == high) || (Seven_Read(right, 2) == high) || (Seven_Read(right, 1) == high)) {
 				while(1){
 					Set_Speed(LEFTWHEEL_PWM_OUT, 0);
 					GPIO_High(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);    // 右轮向后转
+					correct_count ++;
+					if(correct_count > 2){    // 如果校准次数超过2次，则退出校准
+						break;
+					}
 					if(Seven_Read(right, 4) == high){
-              Set_Speed(LEFTWHEEL_PWM_OUT, 0);
-							Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
-							// 先转一段，跨过黑线
-							GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
-							GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
-							Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
-							Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
-							Delay(200);
+						Set_Speed(LEFTWHEEL_PWM_OUT, 0);
+						Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
+						// 先转一段，跨过黑线
+						GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
+						GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
+						Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
+						Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
+						Delay(200);
 						break;
 					}
 				}
+				correct_count = 0;
 			}
 	  }
 		// 右侧中间的先检测到线
@@ -107,36 +120,46 @@ void Forward(int Line_Count) {
 			if ((Seven_Read(left, 1 == high) || (Seven_Read(left, 2) == high) || (Seven_Read(left, 3) == high))){
 				while(1){
 					Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
+					correct_count ++;
+					if(correct_count > 2){    // 如果校准次数超过2次，则退出校准
+						break;
+					}
 					if(Seven_Read(left, 4) == high){
-              Set_Speed(LEFTWHEEL_PWM_OUT, 0);
-							Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
-							// 先转一段，跨过黑线
-							GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
-							GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
-							Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
-							Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
-							Delay(200);
+						Set_Speed(LEFTWHEEL_PWM_OUT, 0);
+						Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
+						// 先转一段，跨过黑线
+						GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
+						GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
+						Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
+						Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
+						Delay(200);
 						break;
 					}
 				}
+				correct_count = 0;
 			}
 			// 如果左侧灰度后半部分检测到白线，说明左轮应该向后
 			else if ((Seven_Read(left, 5) == high) || (Seven_Read(left, 6) == high) || (Seven_Read(left, 7) == high)) {
 				while(1){
 					Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
 					GPIO_Low(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);    // 左轮向后转
+					correct_count ++;
+					if(correct_count > 2){    // 如果校准次数超过2次，则退出校准
+						break;
+					}
 					if(Seven_Read(left, 4) == high){
-              Set_Speed(LEFTWHEEL_PWM_OUT, 0);
-							Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
-							// 先转一段，跨过黑线
-							GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
-							GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
-							Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
-							Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
-							Delay(200);
+						Set_Speed(LEFTWHEEL_PWM_OUT, 0);
+						Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
+						// 先转一段，跨过黑线
+						GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
+						GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
+						Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
+						Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
+						Delay(200);
 						break;
 					}
 				}
+				correct_count = 0;
 			}
 	  }
 		
@@ -662,36 +685,46 @@ void Back(int Line_Count) {
 			if ((Seven_Read(right, 1) == high) || (Seven_Read(right, 2) == high) || (Seven_Read(right, 3) == high)){
 				while(1){
 					Set_Speed(LEFTWHEEL_PWM_OUT, 0);
-						if(Seven_Read(right, 4) == high){
-              Set_Speed(LEFTWHEEL_PWM_OUT, 0);
-							Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
-							// 先转一段，跨过黑线
-							GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
-							GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
-							Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
-							Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
-							Delay(200);
+					correct_count ++;
+					if(correct_count > 2){    // 如果校准次数超过2次，则退出校准
+						break;
+					}
+					if(Seven_Read(right, 4) == high){
+						Set_Speed(LEFTWHEEL_PWM_OUT, 0);
+						Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
+						// 先转一段，跨过黑线
+						GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
+						GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
+						Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
+						Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
+						Delay(200);
 						break;
 					}
 				}
+				correct_count = 0;
 			}
 			// 如果右侧灰度后半部分检测到白线，说明右轮应该向后
 			else if ((Seven_Read(right, 5) == high) || (Seven_Read(right, 6) == high) || (Seven_Read(right, 7) == high)) {
 				while(1){
 					Set_Speed(LEFTWHEEL_PWM_OUT, 0);
 					GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);    // 右轮向后转
+					correct_count ++;
+					if(correct_count > 2){    // 如果校准次数超过2次，则退出校准
+						break;
+					}
 					if(Seven_Read(right, 4) == high){
-              Set_Speed(LEFTWHEEL_PWM_OUT, 0);
-							Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
-							// 先转一段，跨过黑线
-							GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
-							GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
-							Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
-							Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
-							Delay(200);
+						Set_Speed(LEFTWHEEL_PWM_OUT, 0);
+						Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
+						// 先转一段，跨过黑线
+						GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
+						GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
+						Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
+						Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
+						Delay(200);
 						break;
 					}
 				}
+				correct_count = 0;
 			}
 	  }
 		// 右侧中间的先检测到线
@@ -700,36 +733,46 @@ void Back(int Line_Count) {
 			if ((Seven_Read(left, 5 == high) || (Seven_Read(left, 6) == high) || (Seven_Read(left, 7) == high))){
 				while(1){
 					Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
+					correct_count ++;
+					if(correct_count > 2){    // 如果校准次数超过2次，则退出校准
+						break;
+					}
 					if(Seven_Read(left, 4) == high){
-              Set_Speed(LEFTWHEEL_PWM_OUT, 0);
-							Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
-							// 先转一段，跨过黑线
-							GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
-							GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
-							Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
-							Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
-							Delay(200);
+						Set_Speed(LEFTWHEEL_PWM_OUT, 0);
+						Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
+						// 先转一段，跨过黑线
+						GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
+						GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
+						Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
+						Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
+						Delay(200);
 						break;
 					}
 				}
+				correct_count = 0;
 			}
 			// 如果左侧灰度后半部分检测到白线，说明左轮应该向后
 			else if ((Seven_Read(left, 1) == high) || (Seven_Read(left, 2) == high) || (Seven_Read(left, 3) == high)) {
 				while(1){
 					Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
 					GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);    // 左轮向后转
+					correct_count ++;
+					if(correct_count > 2){    // 如果校准次数超过2次，则退出校准
+						break;
+					}
 					if(Seven_Read(left, 4) == high){
-              Set_Speed(LEFTWHEEL_PWM_OUT, 0);
-							Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
-							// 先转一段，跨过黑线
-							GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
-							GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
-							Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
-							Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
-							Delay(200);
+						Set_Speed(LEFTWHEEL_PWM_OUT, 0);
+						Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
+						// 先转一段，跨过黑线
+						GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
+						GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
+						Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
+						Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed - PreSlow);
+						Delay(200);
 						break;
 					}
 				}
+				correct_count = 0;
 			}
 	  }
 		
