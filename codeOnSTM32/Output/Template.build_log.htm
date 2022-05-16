@@ -1,0 +1,146 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: μVision V5.26.2.0
+Copyright (C) 2018 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: rrqq rrqq, rrqq, LIC=LSNXV-PCNJH-SBNEJ-UQJ3T-4JUCY-BF6VB
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Plus  Version: 5.26.2.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 6 (build 750)
+Assembler:       Armasm.exe V5.06 update 6 (build 750)
+Linker/Locator:  ArmLink.exe V5.06 update 6 (build 750)
+Library Manager: ArmAr.exe V5.06 update 6 (build 750)
+Hex Converter:   FromElf.exe V5.06 update 6 (build 750)
+CPU DLL:         SARMCM3.DLL V5.26.2.0
+Dialog DLL:      DCM.DLL V1.17.2.0
+Target DLL:      CMSIS_AGDI.dll V1.30.6.0
+Dialog DLL:      TCM.DLL V1.36.1.0
+ 
+<h2>Project:</h2>
+C:\Users\ASUS\OneDrive - zju.edu.cn\ZJU\2021.11第17届中控杯\代码\ZhongkongCup2022\Project\RVMDK（uv5）\BH-F103.uvprojx
+Project File Date:  02/10/2022
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Build target 'LCD'
+compiling mpu6050.c...
+..\..\User\AdvanceTim\AdvanceTim.h(116): warning:  #1295-D: Deprecated declaration ADVANCE_TIM_Init - give arg types
+  void ADVANCE_TIM_Init();                             // TIM 总初始化
+..\..\User\USART\usart.h(154): warning:  #1295-D: Deprecated declaration NanoStart - give arg types
+  void NanoStart();                                                             // 向nano发送起始信号
+..\..\User\USART\usart.h(160): warning:  #1295-D: Deprecated declaration NanoCatch - give arg types
+  void NanoCatch();
+..\..\User\main.h(43): warning:  #1295-D: Deprecated declaration NanoIOHigh - give arg types
+  extern void NanoIOHigh();
+..\..\User\main.h(50): warning:  #1295-D: Deprecated declaration Test1 - give arg types
+  extern void Test1();    // 第一次测试
+..\..\User\main.h(51): warning:  #1295-D: Deprecated declaration Test2 - give arg types
+  extern void Test2();    // 第二次测试
+..\..\User\mpu6050\mpu6050.c: 6 warnings, 0 errors
+compiling main.c...
+..\..\User\AdvanceTim\AdvanceTim.h(116): warning:  #1295-D: Deprecated declaration ADVANCE_TIM_Init - give arg types
+  void ADVANCE_TIM_Init();                             // TIM 总初始化
+..\..\User\USART\usart.h(154): warning:  #1295-D: Deprecated declaration NanoStart - give arg types
+  void NanoStart();                                                             // 向nano发送起始信号
+..\..\User\USART\usart.h(160): warning:  #1295-D: Deprecated declaration NanoCatch - give arg types
+  void NanoCatch();
+..\..\User\main.h(43): warning:  #1295-D: Deprecated declaration NanoIOHigh - give arg types
+  extern void NanoIOHigh();
+..\..\User\main.h(50): warning:  #1295-D: Deprecated declaration Test1 - give arg types
+  extern void Test1();    // 第一次测试
+..\..\User\main.h(51): warning:  #1295-D: Deprecated declaration Test2 - give arg types
+  extern void Test2();    // 第二次测试
+..\..\User\main.c: 6 warnings, 0 errors
+compiling I2C.c...
+..\..\User\AdvanceTim\AdvanceTim.h(116): warning:  #1295-D: Deprecated declaration ADVANCE_TIM_Init - give arg types
+  void ADVANCE_TIM_Init();                             // TIM 总初始化
+..\..\User\USART\usart.h(154): warning:  #1295-D: Deprecated declaration NanoStart - give arg types
+  void NanoStart();                                                             // 向nano发送起始信号
+..\..\User\USART\usart.h(160): warning:  #1295-D: Deprecated declaration NanoCatch - give arg types
+  void NanoCatch();
+..\..\User\main.h(43): warning:  #1295-D: Deprecated declaration NanoIOHigh - give arg types
+  extern void NanoIOHigh();
+..\..\User\main.h(50): warning:  #1295-D: Deprecated declaration Test1 - give arg types
+  extern void Test1();    // 第一次测试
+..\..\User\main.h(51): warning:  #1295-D: Deprecated declaration Test2 - give arg types
+  extern void Test2();    // 第二次测试
+..\..\User\I2C\I2C.c: 6 warnings, 0 errors
+compiling usart.c...
+..\..\User\USART\usart.h(154): warning:  #1295-D: Deprecated declaration NanoStart - give arg types
+  void NanoStart();                                                             // 向nano发送起始信号
+..\..\User\USART\usart.h(160): warning:  #1295-D: Deprecated declaration NanoCatch - give arg types
+  void NanoCatch();
+..\..\User\AdvanceTim\AdvanceTim.h(116): warning:  #1295-D: Deprecated declaration ADVANCE_TIM_Init - give arg types
+  void ADVANCE_TIM_Init();                             // TIM 总初始化
+..\..\User\main.h(43): warning:  #1295-D: Deprecated declaration NanoIOHigh - give arg types
+  extern void NanoIOHigh();
+..\..\User\main.h(50): warning:  #1295-D: Deprecated declaration Test1 - give arg types
+  extern void Test1();    // 第一次测试
+..\..\User\main.h(51): warning:  #1295-D: Deprecated declaration Test2 - give arg types
+  extern void Test2();    // 第二次测试
+..\..\User\USART\usart.c(325): warning:  #1-D: last line of file ends without a newline
+  }
+..\..\User\USART\usart.c: 7 warnings, 0 errors
+compiling stm32f10x_it.c...
+..\..\User\AdvanceTim\AdvanceTim.h(116): warning:  #1295-D: Deprecated declaration ADVANCE_TIM_Init - give arg types
+  void ADVANCE_TIM_Init();                             // TIM 总初始化
+..\..\User\USART\usart.h(154): warning:  #1295-D: Deprecated declaration NanoStart - give arg types
+  void NanoStart();                                                             // 向nano发送起始信号
+..\..\User\USART\usart.h(160): warning:  #1295-D: Deprecated declaration NanoCatch - give arg types
+  void NanoCatch();
+..\..\User\main.h(43): warning:  #1295-D: Deprecated declaration NanoIOHigh - give arg types
+  extern void NanoIOHigh();
+..\..\User\main.h(50): warning:  #1295-D: Deprecated declaration Test1 - give arg types
+  extern void Test1();    // 第一次测试
+..\..\User\main.h(51): warning:  #1295-D: Deprecated declaration Test2 - give arg types
+  extern void Test2();    // 第二次测试
+..\..\User\stm32f10x_it.c(209): warning:  #177-D: variable "ZERO_OFFSET_COUN"  was declared but never referenced
+  	static const int ZERO_OFFSET_COUN = (1 / dt);     // 1/8 = 125次每秒
+..\..\User\stm32f10x_it.c: 7 warnings, 0 errors
+compiling Move.c...
+..\..\User\AdvanceTim\AdvanceTim.h(116): warning:  #1295-D: Deprecated declaration ADVANCE_TIM_Init - give arg types
+  void ADVANCE_TIM_Init();                             // TIM 总初始化
+..\..\User\USART\usart.h(154): warning:  #1295-D: Deprecated declaration NanoStart - give arg types
+  void NanoStart();                                                             // 向nano发送起始信号
+..\..\User\USART\usart.h(160): warning:  #1295-D: Deprecated declaration NanoCatch - give arg types
+  void NanoCatch();
+..\..\User\main.h(43): warning:  #1295-D: Deprecated declaration NanoIOHigh - give arg types
+  extern void NanoIOHigh();
+..\..\User\main.h(50): warning:  #1295-D: Deprecated declaration Test1 - give arg types
+  extern void Test1();    // 第一次测试
+..\..\User\main.h(51): warning:  #1295-D: Deprecated declaration Test2 - give arg types
+  extern void Test2();    // 第二次测试
+..\..\User\Move\Move.c(89): warning:  #111-D: statement is unreachable
+  						correct_count = 0;
+..\..\User\Move\Move.c(113): warning:  #111-D: statement is unreachable
+  						correct_count = 0;
+..\..\User\Move\Move.c(835): warning:  #111-D: statement is unreachable
+  						correct_count = 0;
+..\..\User\Move\Move.c(859): warning:  #111-D: statement is unreachable
+  						correct_count = 0;
+..\..\User\Move\Move.c: 10 warnings, 0 errors
+linking...
+Program Size: Code=14300 RO-data=15536 RW-data=540 ZI-data=1756  
+FromELF: creating hex file...
+"..\..\Output\Template.axf" - 0 Error(s), 42 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.STM32F1xx_DFP.2.1.0.pack
+                Keil.STM32F1xx_DFP.2.1.0
+                STMicroelectronics STM32F1 Series Device Support, Drivers and Examples
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\_LCD
+  C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include
+
+<h2>Collection of Component Files used:</h2>
+Build Time Elapsed:  00:00:02
+</pre>
+</body>
+</html>
