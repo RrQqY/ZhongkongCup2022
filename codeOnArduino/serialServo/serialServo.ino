@@ -8,6 +8,7 @@ Servo ser4;
 Servo ser5;
 Servo ser6;
 
+// 从Nano传回的舵机控制信号的检测IO口
 int io1 = 8;
 int io2 = 9;
 int io3 = 10;
@@ -15,6 +16,7 @@ int io4 = 11;
 int io5 = 12;
 int io6 = 13;
 
+// 爪子收回时舵机的角度
 #define ser1In  20
 #define ser2In  160
 #define ser3In  160
@@ -22,6 +24,7 @@ int io6 = 13;
 #define ser5In  160
 #define ser6In  160
 
+// 爪子伸出时舵机的角度
 #define ser1Out 180
 #define ser2Out 0
 #define ser3Out 0
