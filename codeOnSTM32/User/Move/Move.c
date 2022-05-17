@@ -308,6 +308,94 @@ void Forward_Front(int Line_Count) {
 }
 
 
+// 巡线直行 n 根线（后七路数线）。
+void Back_Front(int Line_Count) {            
+  int Temp_Count = 0;                     // 当前所在线数
+	int flag = 0;                           // 开始计数标志
+	
+//	// 先转一段，跨过黑线
+	GPIO_High(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
+  GPIO_Low(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
+  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right);
+  Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left);
+	Delay(750);
+	
+	while (1) {
+    if (Seven_Read(left, 4) == low) {                          // 检测到黑色，开启计数准备
+	    flag = 1;
+	  }
+	  if ((flag == 1) && 
+			  (((Seven_Read(front, 2) == high) && (Seven_Read(front, 6)) == high) || 
+			  ((Seven_Read(front, 1) == high) && (Seven_Read(front, 7)) == high))){     // 由黑色变为白色，计数一次
+		  Temp_Count ++;                                                             
+		  flag = 0;
+	  }
+		
+		// 在线前提前减速
+		if ((Seven_Read(left, 3) == high) || (Seven_Read(right, 3)) == high) {        // 中间的前一个灰度数到线时先减速
+		  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right - PreSlow);
+      Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left - PreSlow);
+			Delay(250);
+	  }
+		
+		// 在线前转正
+		if ((Seven_Read(left, 4) == high) && (Seven_Read(right, 4) == low)) {       // 左侧中间的先检测到线
+		  while(1){
+			  Set_Speed(LEFTWHEEL_PWM_OUT, 0);
+				if(Seven_Read(right, 4) == high) break;
+			}
+	  }
+		else if ((Seven_Read(left, 4) == low) && (Seven_Read(right, 4) == high)) {  // 右侧中间的先检测到线
+		  while(1){
+			  Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
+				if(Seven_Read(left, 4) == high) break;
+			}
+	  }
+		
+		// 数到对应的根数退出循环
+		if (Temp_Count >= Line_Count) {
+		  Stop_Forward();
+			return;
+	  }
+		
+		Delay(10);
+		LCD_Printn(1, Temp_Count);                                 // 显示已经数了几根线
+//		LCD_Prints(5, "Signals of seven detector: ");
+//		LCD_Printn(6, SevenTotal(Seven_Read(front, 1), 
+//		                         Seven_Read(front, 2), 
+//		                         Seven_Read(front, 3), 
+//	                           Seven_Read(front, 4), 
+//	                           Seven_Read(front, 5), 
+//	                           Seven_Read(front, 6), 
+//		                         Seven_Read(front, 7)));
+//		LCD_Printn(7, SevenTotal(Seven_Read(back, 1), 
+//		                         Seven_Read(back, 2), 
+//		                         Seven_Read(back, 3), 
+//	                           Seven_Read(back, 4), 
+//	                           Seven_Read(back, 5), 
+//	                           Seven_Read(back, 6), 
+//		                         Seven_Read(back, 7)));
+//		LCD_Printn(8, SevenTotal(Seven_Read(left, 1), 
+//		                         Seven_Read(left, 2), 
+//		                         Seven_Read(left, 3), 
+//	                           Seven_Read(left, 4), 
+//	                           Seven_Read(left, 5), 
+//	                           Seven_Read(left, 6), 
+//		                         Seven_Read(left, 7)));
+//		LCD_Printn(9, SevenTotal(Seven_Read(right, 1), 
+//		                         Seven_Read(right, 2), 
+//		                         Seven_Read(right, 3), 
+//	                           Seven_Read(right, 4), 
+//	                           Seven_Read(right, 5), 
+//	                           Seven_Read(right, 6), 
+//		                         Seven_Read(right, 7)));
+														 
+	  PIDBack();                                                   // 开始PID循线
+		Delay(50);
+	}
+}
+
+
 // 停止
 void Stop_Forward(void) 
 {
@@ -462,7 +550,7 @@ void Right(void)
 // 利用MPU6050左转
 void Left_MPU(int angle)
 {
-	angle = angle - 0;      // 补偿角度，多转1度
+	angle = angle - 3;      // 补偿角度，少转1度
 	char cStr [ 70 ];
   int target_angle;
 	target_angle = Angle[2] + angle + 1;
@@ -492,7 +580,7 @@ void Left_MPU(int angle)
 // 利用MPU6050右转
 void Right_MPU(int angle)
 {
-	angle = angle - 2;      // 补偿角度，多转1度
+	angle = angle - 2;      // 补偿角度，少转1度
 	char cStr [ 70 ];
 	int target_angle;
 	target_angle = Angle[2] - angle - 1;
@@ -1026,6 +1114,203 @@ void PIDBack(void)
 }
 
 
+// 倒着巡线直行 n 根线。形参1为数线数量
+void Back_Slide(int Line_Count) {            
+  int Temp_Count = 0;                     // 当前所在线数
+	int flag = 0;                           // 开始计数标志
+	
+	// 先转一段，跨过黑线
+	GPIO_High(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
+  GPIO_Low(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
+  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right);
+  Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left);
+	Delay(750);
+	
+	while (1) {
+//		Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed);
+//		Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed);
+//		
+    if (Seven_Read(left, 4) == low) {                          // 检测到黑色，开启计数准备
+	    flag = 1;
+	  }
+	  if ((flag == 1) && (Seven_Read(left, 4) == high)) {        // 由黑色变为白色，计数一次
+		  Temp_Count ++;     
+			if(Temp_Count < Line_Count){
+				// 先转一段，跨过黑线
+				GPIO_High(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
+				GPIO_Low(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
+				Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right - PreSlow);
+				Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left - PreSlow);
+				Delay(100);
+			}
+		  flag = 0;
+	  }
+		
+		// 在线前提前减速
+		if ((Seven_Read(left, 7) == high) || (Seven_Read(right, 7)) == high) {        // 中间的前一个灰度数到线时先减速
+		  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right - PreSlow);
+      Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left - PreSlow);
+	  }
+		
+//		// 在线前转正
+//		if ((Seven_Read(left, 4) == high) && (Seven_Read(right, 4) == low)) {       // 左侧中间的先检测到线
+//		  while(1){
+//			  Set_Speed(LEFTWHEEL_PWM_OUT, 0);
+//				if(Seven_Read(right, 4) == high) break;
+//			}
+//	  }
+//		else if ((Seven_Read(left, 4) == low) && (Seven_Read(right, 4) == high)) {  // 右侧中间的先检测到线
+//		  while(1){
+//			  Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
+//				if(Seven_Read(left, 4) == high) break;
+//			}
+//	  }
+		
+		// 在线前转正
+		// 左侧中间的先检测到线
+		if ((Seven_Read(left, 4) == high) && (Seven_Read(right, 4) == low)) { 
+			// 如果右侧灰度前半部分检测到白线，说明右轮应该向前
+			if ((Seven_Read(right, 1) == high) || (Seven_Read(right, 2) == high) || (Seven_Read(right, 3) == high)){
+				while(1){
+					Set_Speed(LEFTWHEEL_PWM_OUT, 0);
+					Set_Speed(RIGHTWHEEL_PWM_OUT, RightTruningSpeed - PreSlow);
+					correct_count ++;
+					if(correct_count > 2){    // 如果校准次数超过2次，则退出校准
+						break;
+					}
+//					if(Seven_Read(right, 4) == high){
+//						Set_Speed(LEFTWHEEL_PWM_OUT, 0);
+//						Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
+//						// 先转一段，跨过黑线
+//						GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
+//						GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
+//						Set_Speed(RIGHTWHEEL_PWM_OUT, RightTruningSpeed - PreSlow);
+//						Set_Speed(LEFTWHEEL_PWM_OUT, LeftTruningSpeed - PreSlow);
+//						Delay(200);
+//						break;
+//					}
+				}
+				correct_count = 0;
+			}
+			// 如果右侧灰度后半部分检测到白线，说明右轮应该向后
+			else if ((Seven_Read(right, 5) == high) || (Seven_Read(right, 6) == high) || (Seven_Read(right, 7) == high)) {
+				while(1){
+					Set_Speed(LEFTWHEEL_PWM_OUT, 0);
+					Set_Speed(RIGHTWHEEL_PWM_OUT, RightTruningSpeed - PreSlow);
+					GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);    // 右轮向后转
+					correct_count ++;
+					if(correct_count > 2){    // 如果校准次数超过2次，则退出校准
+						break;
+					}
+//					if(Seven_Read(right, 4) == high){
+//						Set_Speed(LEFTWHEEL_PWM_OUT, 0);
+//						Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
+//						// 先转一段，跨过黑线
+//						GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
+//						GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
+//						Set_Speed(RIGHTWHEEL_PWM_OUT, RightTruningSpeed - PreSlow);
+//						Set_Speed(LEFTWHEEL_PWM_OUT, LeftTruningSpeed - PreSlow);
+//						Delay(200);
+//						break;
+//					}
+				}
+				correct_count = 0;
+			}
+	  }
+		// 右侧中间的先检测到线
+		else if ((Seven_Read(left, 4) == low) && (Seven_Read(right, 4) == high)) { 
+			// 如果左侧灰度前半部分检测到白线，说明左轮应该向前
+			if ((Seven_Read(left, 5 == high) || (Seven_Read(left, 6) == high) || (Seven_Read(left, 7) == high))){
+				while(1){
+					Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
+					Set_Speed(LEFTWHEEL_PWM_OUT, LeftTruningSpeed - PreSlow);
+					correct_count ++;
+					if(correct_count > 2){    // 如果校准次数超过2次，则退出校准
+						break;
+						correct_count = 0;
+					}
+//					if(Seven_Read(left, 4) == high){
+//						Set_Speed(LEFTWHEEL_PWM_OUT, 0);
+//						Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
+//						// 先转一段，跨过黑线
+//						GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
+//						GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
+//						Set_Speed(RIGHTWHEEL_PWM_OUT, RightTruningSpeed - PreSlow);
+//						Set_Speed(LEFTWHEEL_PWM_OUT, LeftTruningSpeed - PreSlow);
+//						Delay(200);
+//						break;
+//					}
+				}
+			}
+			// 如果左侧灰度后半部分检测到白线，说明左轮应该向后
+			else if ((Seven_Read(left, 1) == high) || (Seven_Read(left, 2) == high) || (Seven_Read(left, 3) == high)) {
+				while(1){
+					Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
+					Set_Speed(LEFTWHEEL_PWM_OUT, LeftTruningSpeed - PreSlow);
+					GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);    // 左轮向后转
+					correct_count ++;
+					if(correct_count > 2){    // 如果校准次数超过2次，则退出校准
+						break;
+						correct_count = 0;
+					}
+//					if(Seven_Read(left, 4) == high){
+//						Set_Speed(LEFTWHEEL_PWM_OUT, 0);
+//						Set_Speed(RIGHTWHEEL_PWM_OUT, 0);
+//						// 先转一段，跨过黑线
+//						GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
+//						GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
+//						Set_Speed(RIGHTWHEEL_PWM_OUT, RightTruningSpeed - PreSlow);
+//						Set_Speed(LEFTWHEEL_PWM_OUT, LeftTruningSpeed - PreSlow);
+//						Delay(200);
+//						break;
+//					}
+				}
+			}
+	  }
+		
+		// 数到对应的根数退出循环
+		if (Temp_Count >= Line_Count) {
+		  Stop_Back();
+			return;
+	  }
+		
+		Delay(20);
+//	  LCD_Printn(1, Temp_Count);                                 // 显示已经数了几根线
+//		LCD_Prints(5, "Signals of seven detector: ");
+//		LCD_Printn(6, SevenTotal(Seven_Read(front, 1), 
+//		                         Seven_Read(front, 2), 
+//		                         Seven_Read(front, 3), 
+//	                           Seven_Read(front, 4), 
+//	                           Seven_Read(front, 5), 
+//	                           Seven_Read(front, 6), 
+//		                         Seven_Read(front, 7)));
+//		LCD_Printn(7, SevenTotal(Seven_Read(back, 1), 
+//		                         Seven_Read(back, 2), 
+//		                         Seven_Read(back, 3), 
+//	                           Seven_Read(back, 4), 
+//	                           Seven_Read(back, 5), 
+//	                           Seven_Read(back, 6), 
+//		                         Seven_Read(back, 7)));
+//		LCD_Printn(8, SevenTotal(Seven_Read(left, 1), 
+//		                         Seven_Read(left, 2), 
+//		                         Seven_Read(left, 3), 
+//	                           Seven_Read(left, 4), 
+//	                           Seven_Read(left, 5), 
+//	                           Seven_Read(left, 6), 
+//		                         Seven_Read(left, 7)));
+//		LCD_Printn(9, SevenTotal(Seven_Read(right, 1), 
+//		                         Seven_Read(right, 2), 
+//		                         Seven_Read(right, 3), 
+//	                           Seven_Read(right, 4), 
+//	                           Seven_Read(right, 5), 
+//	                           Seven_Read(right, 6), 
+//		                         Seven_Read(right, 7)));
+														 
+	  PID_grab();                                                   // 开始PID循线
+		Delay(50);
+	}
+}
+
 // 用侧面三灰度 PID 巡线
 void PID_grab(void)
 {
@@ -1046,14 +1331,14 @@ void PID_grab(void)
 	static int switch_value_grab = 0;
 	switch_value_grab = 1 * sensor_grab[0] + 3 * sensor_grab[1] + 5 * sensor_grab[2];
 	switch (switch_value_grab) {
-		case 8:error_grab = -1.5; break;
-		case 5:error_grab = -1; break;
+		case 8:error_grab = -1.2; break;
+		case 5:error_grab = -0.7; break;
 		case 0:error_grab = 0; break;
-		case 1:error_grab = 1; break;
-		case 4:error_grab = 1.5; break;
+		case 1:error_grab = 0.7; break;
+		case 4:error_grab = 1.2; break;
 		
-		case 9:if (error_grab == 1.5) error_grab = 2;
-					  else if (error_grab == -1.5) error_grab = -2;
+		case 9:if (error_grab == 1.2) error_grab = 1.7;
+					  else if (error_grab == -1.2) error_grab = -1.7;
 						else error_grab = 0;
 					  break;
 		default:error_grab = 0;break;
@@ -1065,8 +1350,8 @@ void PID_grab(void)
 	PID_value_grab = Kp_grab * P_grab + Ki_grab * I_grab + Kd_grab * D_grab;
 	previous_error_grab = error_grab;
 	
-	Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right + 0.5*PID_value_grab);    //右轮转动影响较大，速度变化不能过大 
-	Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left - PID_value_grab);
-	GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);    
-	GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
+	Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right -5 + PID_value_grab);
+	Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left -5 - 0.6*PID_value_grab);    //左轮转动影响较大，速度变化不能过大 
+	GPIO_High(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);    
+	GPIO_Low(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
 }

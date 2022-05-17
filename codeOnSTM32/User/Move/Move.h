@@ -27,7 +27,7 @@
 #define KD    0
 
 // 侧面三灰度PID参数宏定义
-#define KP_grab   10
+#define KP_grab   11
 #define KI_grab   1
 #define KD_grab   0
 
@@ -36,8 +36,11 @@ static int correct_count;            // 校准次数
 
 
 void PID(void);                      // PID 巡线
+void PID_grab(void);
 void Forward(int Line_Count);        // 巡线直行 n 根线
 void Forward_Front(int Line_Count);  // 巡线直行 n 根线（前七路数线）
+void Back_Front(int Line_Count);
+void Back_Slide(int Line_Count);  // 靠侧面三灰度巡线直行 n 根线
 void Right(void);                    // 右转
 void Left(void);                     // 左转
 //void Stop(void);                   // 停止

@@ -299,10 +299,25 @@ void start(void){
 //	Back(5);        // 巡线两格
 //--------//
 
-	Forward_Front(1);  // 巡线一格（前灰度数线）
+	GPIO_High(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
+  GPIO_Low(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
+  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right);
+  Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left);
+	Delay(1200);
+	
+	Back_Front(1);    // 巡线一格（后灰度数线）
 	Delay(500);
-	Left_MPU(90);      // 左转
-	Delay(1000);
+	Left_MPU(90);     // 左转
+	Delay(500);
+//	Forward(1);        // 巡线两格
+//	Delay(500);
+
+//	Forward_Front(1);  // 巡线一格（前灰度数线）
+//	Delay(500);
+//	Left_MPU(90);      // 左转
+//	Delay(500);
+
+	Back_Slide(2);
 
 //	GPIO_High(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
 //  GPIO_Low(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
