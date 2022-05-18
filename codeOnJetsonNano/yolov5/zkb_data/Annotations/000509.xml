@@ -1,0 +1,26 @@
+<annotation>
+	<folder>images</folder>
+	<filename>000509.png</filename>
+	<path>C:\Users\ASUS\Desktop\yolov5\zkb_data\images\000509.png</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>480</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>cube</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>283</xmin>
+			<ymin>125</ymin>
+			<xmax>359</xmax>
+			<ymax>209</ymax>
+		</bndbox>
+	</object>
+</annotation>

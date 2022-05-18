@@ -1,8 +1,8 @@
-train: C:/Users/ASUS/Desktop/yolov5/zkb_data/train.txt
-val: C:/Users/ASUS/Desktop/yolov5/zkb_data/val.txt
+train:  C:/Users/ASUS/Desktop/yolov5/zkb_data/train.txt
+val:  C:/Users/ASUS/Desktop/yolov5/zkb_data/val.txt
 
 # number of classes
-nc: 2
+nc:  5
 
 # class names
-names: ['dp', 'beer', 'red', 'blue', 'cube']
+names:  ['dp', 'beer', 'red', 'blue', 'cube']

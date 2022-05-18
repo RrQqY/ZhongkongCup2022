@@ -4,7 +4,7 @@ import os
 from os import getcwd
 
 sets = ['train', 'val', 'test']
-classes = ["dp", "beer", "red", "blue", "cube"]   # 改成自己的类别
+classes = ["dp", "beer", "red", "blue", "cube"]   # 改成�?己的类别
 abs_path = os.getcwd()
 print(abs_path)
 
@@ -31,7 +31,7 @@ def convert_annotation(image_id):
     h = int(size.find('height').text)
     for obj in root.iter('object'):
         # difficult = obj.find('difficult').text
-        difficult = obj.find('Difficult').text
+        difficult = obj.find('difficult').text
         cls = obj.find('name').text
         if cls not in classes or int(difficult) == 1:
             continue
@@ -40,7 +40,7 @@ def convert_annotation(image_id):
         b = (float(xmlbox.find('xmin').text), float(xmlbox.find('xmax').text), float(xmlbox.find('ymin').text),
              float(xmlbox.find('ymax').text))
         b1, b2, b3, b4 = b
-        # 标注越界修正
+        # 标注越界�?�?
         if b2 > w:
             b2 = w
         if b4 > h:
@@ -51,11 +51,11 @@ def convert_annotation(image_id):
 
 wd = getcwd()
 for image_set in sets:
-    if not os.path.exists('labels/'):
-        os.makedirs('labels/')
+    if not os.path.exists('C:/Users/ASUS/Desktop/yolov5/zkb_data/labels/'):
+        os.makedirs('C:/Users/ASUS/Desktop/yolov5/zkb_data/labels/')
     image_ids = open('C:/Users/ASUS/Desktop/yolov5/zkb_data/ImageSets/Main/%s.txt' % (image_set)).read().strip().split()
     list_file = open('C:/Users/ASUS/Desktop/yolov5/zkb_data/%s.txt' % (image_set), 'w')
     for image_id in image_ids:
-        list_file.write(abs_path + 'C:/Users/ASUS/Desktop/yolov5/zkb_data/images/%s.jpg\n' % (image_id))
+        list_file.write('C:/Users/ASUS/Desktop/yolov5/zkb_data/images/%s.png\n' % (image_id))
         convert_annotation(image_id)
     list_file.close()
