@@ -17,9 +17,9 @@ int io5 = 12;
 int io6 = 13;
 
 // 爪子收回时舵机的角度
-#define ser1In  20
-#define ser2In  160
-#define ser3In  160
+#define ser1In  0
+#define ser2In  220
+#define ser3In  180
 #define ser4In  20
 #define ser5In  160
 #define ser6In  160
@@ -138,6 +138,4 @@ void loop()
   ServoAction();
   
   Serial.println(nanoFlag);
-//  strcpy(nanoFlag, "a000000");
-//  ServoAction();
 }

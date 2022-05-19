@@ -52,7 +52,7 @@ struct SQ       stcQ;
 int task_readdata_finish = 0;
 
 
-// 第一次测试
+// 1代方案测试
 void Test1()
 {
 //	Forward(1);        // 巡线两格
@@ -106,52 +106,108 @@ void Test1()
 }
 
 
-// 第二次测试
+// 2代方案测试
 void Test2()
 {
-//	Forward(1);        // 巡线两格
-//  Delay(500);
-//	TrunTo_MPU(-180);
-//	Delay(1000);
+	// 收起购物车夹臂
+	MoveSrv13(0);
+	MoveSrv14(0);
+	Delay(800);
 	
+	// 直行冲出红色区域
+	GPIO_High(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
+  GPIO_Low(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
+  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right);
+  Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left);
+	Delay(1200);
+	
+	// 巡线直走直到前七路数到线，然后左转，让侧三路压在线上
+	Back_Front(1);    // 巡线一格（前七路数线）
+	Delay(300);
+	Left_MPU(90);     // 左转
+	Delay(300);
+
+	// ----第一侧货架
+	OneSideAction();
+	
+	// ----第二侧货架
+	OneSideAction();
+	
+	// ----第三侧货架
+	OneSideAction();
+	
+	// ----第四侧货架
+	OneSideAction();
+}
+
+
+// 一侧货架的执行函数：向前走六格，每格进行一次识别、抓取操作
+void OneSideAction()
+{
+	// 向前走六格，每格进行一次识别、抓取操作
+	// ----第一格
+	OneGridAction();
+	Delay(500);
+	// ----第二格
+	OneGridAction();
+	Delay(500);
+	// ----第三格
+	OneGridAction();
+	Delay(500);
+	// ----第四格
+	OneGridAction();
+	Delay(500);
+	// ----第五格
+	OneGridAction();
+	Delay(500);
+	// ----第六格
+	OneGridAction();
+	Delay(500);
+	
+	// 走完一侧货架后，向前冲一段时间，撞墙矫正
+	GPIO_High(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走（额外加速撞墙）
+  GPIO_Low(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
+  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right + 35);
+  Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left + 35);
+	Delay(2500);
+	
+	// 后退（不巡线）至后七路数到线，然后右转，让侧三路再次压在线上
+	Front_Back(1);    // 巡线一格（后七路数线）
+	Delay(300);
+	Right_MPU(90);
+	Delay(300);
+}
+
+
+// 一格货架的执行函数：进行一次识别、抓取操作
+void OneGridAction()
+{
+	Back_Slide(1);
+	Delay(1000);
+	MoveSrv7(1);       // 上层臂抬起
+	Delay(300);
 	NanoIOHigh();      // 第一次给Nano发信号，拍照片
 	Delay(1500);
-	Right_MPU(92);     // 右转
-	Delay(500); 
-	Forward_Front(1);  // 巡线一格（前灰度数线）
-	Delay(500);
-	Left_MPU(90);      // 左转
-	Delay(1000);
-	// 这里已经停到货架面前了
-	MoveSrv7(1);       // 上层臂抬起
 	MoveSrv15(0);      // 翻斗放下
-	Delay(500);
+	Delay(300);
 	NanoIOHigh();      // 第二次给Nano发信号，爪子张开
-	Delay(500);
+	Delay(300);
 	SlideOut();        // 滑轨向前移动
-	Delay(500);
+	Delay(300);
 	NanoIOHigh();      // 第三次给Nano发信号，抓取
 	Delay(1000);
-	// 这里货物已经掉进翻斗了
+		// 这里货物已经掉进翻斗了
 	TrackMove();       // 履带向后转动
 	Delay(800);
 	SlideIn();         // 滑轨向后移动收回
-	Delay(500);
+	Delay(300);
 	MoveSrv15(1);      // 翻斗抬起
-	Delay(1500);
+	Delay(1700);
 	TrackStop();       // 履带停止转动
-	Delay(500);
+	Delay(300);
 	MoveSrv7(0);       // 上层臂放下
-	Delay(500);
-	// 这里可以开始返回了
-	Right_MPU(89);     // 右转
-	Delay(500);
-	Back(1);        // 巡线一格
-	Delay(500);
-	Left_MPU(89);     // 右转
-	Delay(500);
-	
-  // 先转一段，跨过黑线
+	Delay(300);
+		// 先走一段，跨过黑线
 	GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
   GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
   Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed);
@@ -216,16 +272,9 @@ void start(void){
 	// 5、巡线+数线停止+伸出滑轨+右转+张开爪子demo
 //	Forward(1);                    // 向前巡线并数一根线
 //	Delay(1000);
-	
-	//Catch();
-	
-//	Left();                        // 左转
-	
-  // 6、数两根线demo
-  //Forward(5);
 
   // 7、履带运动demo
-//	Set_Speed(TRACK          PWM, 128);
+//	Set_Speed(TRACK_PWM, 128);
 
   // 8、MPU6050 转向demo
 //	Left_MPU(90);
@@ -269,10 +318,6 @@ void start(void){
 //	}
 
 //--------//
-//	MoveSrv13(0);
-//	MoveSrv14(0);
-//	Delay(800);
-//	
 //	GPIO_High(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
 //  GPIO_Low(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
 //  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right);
@@ -298,26 +343,6 @@ void start(void){
 //	Delay(1000);
 //	Back(5);        // 巡线两格
 //--------//
-
-	GPIO_High(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
-  GPIO_Low(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
-  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right);
-  Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left);
-	Delay(1200);
-	
-	Back_Front(1);    // 巡线一格（后灰度数线）
-	Delay(500);
-	Left_MPU(90);     // 左转
-	Delay(500);
-//	Forward(1);        // 巡线两格
-//	Delay(500);
-
-//	Forward_Front(1);  // 巡线一格（前灰度数线）
-//	Delay(500);
-//	Left_MPU(90);      // 左转
-//	Delay(500);
-
-	Back_Slide(2);
 
 //	GPIO_High(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
 //  GPIO_Low(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
@@ -413,7 +438,7 @@ int main(void)
 	
 	while(1){
 	  if(GPIO_Read(START_GPIO_PORT, START_GPIO_PIN) == 1){
-	  	GPIO_Low(GREEN_GPIO_PORT, GREEN_GPIO_PIN);    // 打开绿灯
+	  	GPIO_Low(GREEN_GPIO_PORT, GREEN_GPIO_PIN);    // 打开绿灯，表示程序开始运行
 			GPIO_High(RED_GPIO_PORT, RED_GPIO_PIN);
 			
 			start();                                      // 运行开始函数
@@ -421,7 +446,7 @@ int main(void)
 	  }
 		else if(GPIO_Read(START_GPIO_PORT, START_GPIO_PIN) == 0){
 			GPIO_Low(RED_GPIO_PORT, RED_GPIO_PIN);
-			GPIO_High(GREEN_GPIO_PORT, GREEN_GPIO_PIN);   // 打开红灯
+			GPIO_High(GREEN_GPIO_PORT, GREEN_GPIO_PIN);   // 打开红灯，表示程序等待开始
 	  }
   }
 	

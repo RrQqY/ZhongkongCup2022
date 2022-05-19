@@ -47,9 +47,10 @@ extern void LCD_Prints(int line, char dispBuff[]);         // LCD 屏显示英文字符
 extern uint16_t lcdid;
 extern uint8_t time_now;                                   // 开机到现在的运行时间
 
-extern void Test1();    // 第一次测试
-extern void Test2();    // 第二次测试
-
+extern void Test1();            // 1代方案测试
+extern void Test2();            // 2代方案测试
+extern void OneSideAction();    // 一侧货架的执行函数：向前走六格，每格进行一次识别、抓取操作
+extern void OneGridAction();    // 一格货架的执行函数：进行一次识别、抓取操作
 
 // IMU 宏定义
 #define SAVE 			0x00
