@@ -119,7 +119,7 @@ void Test2()
   GPIO_Low(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
   Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right);
   Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left);
-	Delay(1200);
+	Delay(1280);
 	
 	// 巡线直走直到前七路数到线，然后左转，让侧三路压在线上
 	Back_Front(1);    // 巡线一格（前七路数线）
@@ -129,12 +129,21 @@ void Test2()
 
 	// ----第一侧货架
 	OneSideAction();
+	Delay(500);
+	Back_Slide(2);
+	Delay(500);
 	
 	// ----第二侧货架
 	OneSideAction();
+	Delay(500);
+	Back_Slide(2);
+	Delay(500);
 	
 	// ----第三侧货架
 	OneSideAction();
+	Delay(500);
+	Back_Slide(2);
+	Delay(500);
 	
 	// ----第四侧货架
 	OneSideAction();
@@ -169,7 +178,7 @@ void OneSideAction()
   GPIO_Low(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
   Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right + 35);
   Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left + 35);
-	Delay(2500);
+	Delay(2400);
 	
 	// 后退（不巡线）至后七路数到线，然后右转，让侧三路再次压在线上
 	Front_Back(1);    // 巡线一格（后七路数线）
@@ -186,10 +195,10 @@ void OneGridAction()
 	Delay(1000);
 	MoveSrv7(1);       // 上层臂抬起
 	Delay(300);
+	MoveSrv15(0);      // 翻斗放下
+	Delay(1000);
 	NanoIOHigh();      // 第一次给Nano发信号，拍照片
 	Delay(1500);
-	MoveSrv15(0);      // 翻斗放下
-	Delay(300);
 	NanoIOHigh();      // 第二次给Nano发信号，爪子张开
 	Delay(300);
 	SlideOut();        // 滑轨向前移动
@@ -202,17 +211,17 @@ void OneGridAction()
 	SlideIn();         // 滑轨向后移动收回
 	Delay(300);
 	MoveSrv15(1);      // 翻斗抬起
-	Delay(1700);
+	Delay(2300);
 	TrackStop();       // 履带停止转动
 	Delay(300);
 	MoveSrv7(0);       // 上层臂放下
 	Delay(300);
-		// 先走一段，跨过黑线
-	GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
-  GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
-  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed);
-  Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed);
-	Delay(400);
+//		// 先走一段，跨过黑线
+//	GPIO_High(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
+//  GPIO_Low(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
+//  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed);
+//  Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed);
+//	Delay(400);
 }
 
 
@@ -318,6 +327,23 @@ void start(void){
 //	}
 
 //--------//
+
+	Test2();
+	
+//	// 走完一侧货架后，向前冲一段时间，撞墙矫正
+//	GPIO_High(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走（额外加速撞墙）
+//  GPIO_Low(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
+//  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right + 35);
+//  Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left + 35);
+//	Delay(2400);
+//	
+//	// 后退（不巡线）至后七路数到线，然后右转，让侧三路再次压在线上
+//	Front_Back(1);    // 巡线一格（后七路数线）
+//	Delay(300);
+//	Right_MPU(90);
+//	Delay(300);
+	
+	
 //	GPIO_High(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
 //  GPIO_Low(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
 //  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right);

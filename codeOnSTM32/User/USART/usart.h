@@ -135,7 +135,7 @@
 #define MoveSrv5(up) up>0 ? MoveServo(5, 500, 600) : MoveServo(5, 500, 2400)
 #define MoveSrv6(up) up>0 ? MoveServo(6, 500, 2350) : MoveServo(6, 500, 400)
 
-#define MoveSrv7(up) up>0  ? MoveServo(7, 500, 1150) : MoveServo(7, 500, 1550)    // 上层臂大舵机
+#define MoveSrv7(up) up>0  ? MoveServo(7, 500, 950) : MoveServo(7, 500, 1550)    // 上层臂大舵机
 #define MoveSrv15(up) up>0 ? MoveServo(15, 500, 1200) : MoveServo(15, 500, 600)   // 翻斗大舵机
 
 #define MoveSrv13(up) up>0 ? MoveServo(13, 500, 1550) : MoveServo(13, 500, 550)   // 左装夹臂
