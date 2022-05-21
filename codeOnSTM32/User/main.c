@@ -112,7 +112,7 @@ void Test2()
 	// 收起购物车夹臂
 	MoveSrv13(0);
 	MoveSrv14(0);
-	Delay(800);
+	Delay(600);
 	
 	// 直行冲出红色区域
 	GPIO_High(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
@@ -126,24 +126,27 @@ void Test2()
 	Delay(300);
 	Left_MPU(90);     // 左转
 	Delay(300);
+	
+	Back_Slide(1);
+	Delay(200);
 
 	// ----第一侧货架
 	OneSideAction();
-	Delay(500);
-	Back_Slide(2);
-	Delay(500);
+	Delay(300);
+	Back_Slide(3);
+	Delay(300);
 	
 	// ----第二侧货架
 	OneSideAction();
-	Delay(500);
-	Back_Slide(2);
-	Delay(500);
+	Delay(300);
+	Back_Slide(3);
+	Delay(300);
 	
 	// ----第三侧货架
 	OneSideAction();
-	Delay(500);
-	Back_Slide(2);
-	Delay(500);
+	Delay(300);
+	Back_Slide(3);
+	Delay(300);
 	
 	// ----第四侧货架
 	OneSideAction();
@@ -156,34 +159,34 @@ void OneSideAction()
 	// 向前走六格，每格进行一次识别、抓取操作
 	// ----第一格
 	OneGridAction();
-	Delay(500);
+	Delay(300);
 	// ----第二格
 	OneGridAction();
-	Delay(500);
+	Delay(300);
 	// ----第三格
 	OneGridAction();
-	Delay(500);
+	Delay(300);
 	// ----第四格
 	OneGridAction();
-	Delay(500);
+	Delay(300);
 	// ----第五格
 	OneGridAction();
-	Delay(500);
+	Delay(300);
 	// ----第六格
 	OneGridAction();
-	Delay(500);
+	Delay(300);
 	
 	// 走完一侧货架后，向前冲一段时间，撞墙矫正
 	GPIO_High(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走（额外加速撞墙）
   GPIO_Low(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
   Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right + 35);
   Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left + 35);
-	Delay(2400);
+	Delay(2700);
 	
 	// 后退（不巡线）至后七路数到线，然后右转，让侧三路再次压在线上
 	Front_Back(1);    // 巡线一格（后七路数线）
 	Delay(300);
-	Right_MPU(90);
+	Right_MPU(88);
 	Delay(300);
 }
 
@@ -192,7 +195,7 @@ void OneSideAction()
 void OneGridAction()
 {
 	Back_Slide(1);
-	Delay(1000);
+	Delay(500);
 	MoveSrv7(1);       // 上层臂抬起
 	Delay(300);
 	MoveSrv15(0);      // 翻斗放下
@@ -200,7 +203,7 @@ void OneGridAction()
 	NanoIOHigh();      // 第一次给Nano发信号，拍照片
 	Delay(1500);
 	NanoIOHigh();      // 第二次给Nano发信号，爪子张开
-	Delay(300);
+	Delay(1300);
 	SlideOut();        // 滑轨向前移动
 	Delay(300);
 	NanoIOHigh();      // 第三次给Nano发信号，抓取
@@ -209,9 +212,9 @@ void OneGridAction()
 	TrackMove();       // 履带向后转动
 	Delay(800);
 	SlideIn();         // 滑轨向后移动收回
-	Delay(300);
+	Delay(700);
 	MoveSrv15(1);      // 翻斗抬起
-	Delay(2300);
+	Delay(1700);
 	TrackStop();       // 履带停止转动
 	Delay(300);
 	MoveSrv7(0);       // 上层臂放下

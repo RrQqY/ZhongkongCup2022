@@ -580,8 +580,8 @@ void Front_Back(int Line_Count) {
 //	                           Seven_Read(right, 6), 
 //		                         Seven_Read(right, 7)));
 														 
-	  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right-11);
-		Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left-10);
+	  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right-15);
+		Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left-15);
 		GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);    // 左轮 High ，右轮 Low 向前；左轮 Low ，右轮 High 向后
 		GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
 		Delay(50);
