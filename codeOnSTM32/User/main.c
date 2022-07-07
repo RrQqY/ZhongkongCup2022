@@ -122,7 +122,7 @@ void Test2()
 	Delay(1280);
 	
 	// 巡线直走直到前七路数到线，然后左转，让侧三路压在线上
-	Back_Front(1);    // 巡线一格（前七路数线）
+	Back_Front_Start(1);    // 巡线一格（前七路数线）
 	Delay(300);
 	Left_MPU(90);     // 左转
 	Delay(300);
@@ -200,13 +200,13 @@ void OneGridAction()
 	Delay(300);
 	MoveSrv15(0);      // 翻斗放下
 	Delay(1000);
-	NanoIOHigh();      // 第一次给Nano发信号，拍照片
+	NanoIOHigh1();      // 第一次给Nano发信号，拍照片
 	Delay(1500);
-	NanoIOHigh();      // 第二次给Nano发信号，爪子张开
-	Delay(1300);
+	NanoIOHigh2();      // 第二次给Nano发信号，爪子张开
+	Delay(1100);
 	SlideOut();        // 滑轨向前移动
 	Delay(300);
-	NanoIOHigh();      // 第三次给Nano发信号，抓取
+	NanoIOHigh3();      // 第三次给Nano发信号，抓取
 	Delay(1000);
 		// 这里货物已经掉进翻斗了
 	TrackMove();       // 履带向后转动
@@ -214,7 +214,8 @@ void OneGridAction()
 	SlideIn();         // 滑轨向后移动收回
 	Delay(700);
 	MoveSrv15(1);      // 翻斗抬起
-	Delay(1700);
+//	Delay(1700);
+	Delay(1300);
 	TrackStop();       // 履带停止转动
 	Delay(300);
 	MoveSrv7(0);       // 上层臂放下
@@ -225,6 +226,34 @@ void OneGridAction()
 //  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed);
 //  Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed);
 //	Delay(400);
+}
+
+// 虚假的一格货架的执行函数：进行一次识别、抓取操作
+void OneGridAction_fake()
+{
+	Delay(3000);
+	NanoIOHigh1();      // 第一次给Nano发信号，拍照片
+	Delay(1500);
+	NanoIOHigh2();      // 第二次给Nano发信号，爪子张开
+	Delay(1600);
+	NanoIOHigh3();      // 第三次给Nano发信号，抓取
+	Delay(1000);
+	
+	Delay(4000);
+	NanoIOHigh1();      // 第一次给Nano发信号，拍照片
+	Delay(1500);
+	NanoIOHigh2();      // 第二次给Nano发信号，爪子张开
+	Delay(1600);
+	NanoIOHigh3();      // 第三次给Nano发信号，抓取
+	Delay(1000);
+	
+	Delay(3500);
+	NanoIOHigh1();      // 第一次给Nano发信号，拍照片
+	Delay(1500);
+	NanoIOHigh2();      // 第二次给Nano发信号，爪子张开
+	Delay(1600);
+	NanoIOHigh3();      // 第三次给Nano发信号，抓取
+	Delay(1000);
 }
 
 
@@ -246,6 +275,7 @@ void prepare(void){
 	Set_Speed(TRACK_PWM, 0);
 	Set_Speed(SLIDE_PWM, 0);
 	
+	GPIO_Low(NANO5_GPIO_PORT, NANO5_GPIO_PIN);
 	GPIO_Low(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
 	
 	MoveSrv15(1);
@@ -331,7 +361,10 @@ void start(void){
 
 //--------//
 
+//  OneGridAction_fake();      // 赛前抽风（提前模拟检测三次）
 	Test2();
+//	OneGridAction();           // 做一格
+//	OneSideAction();           // 做一侧
 	
 //	// 走完一侧货架后，向前冲一段时间，撞墙矫正
 //	GPIO_High(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走（额外加速撞墙）
@@ -473,6 +506,15 @@ int main(void)
 			break;
 	  }
 		else if(GPIO_Read(START_GPIO_PORT, START_GPIO_PIN) == 0){
+			if(GPIO_Read(FAKE_GPIO_PORT, FAKE_GPIO_PIN) == 1){
+				GPIO_Low(RED_GPIO_PORT, RED_GPIO_PIN);
+				GPIO_High(GREEN_GPIO_PORT, GREEN_GPIO_PIN);   // 打开红灯，表示程序等待开始	
+				OneGridAction_fake();                         // 运行虚假开始函数
+			}
+			else if(GPIO_Read(FAKE_GPIO_PORT, FAKE_GPIO_PIN) == 0){	
+				GPIO_Low(RED_GPIO_PORT, RED_GPIO_PIN);
+				GPIO_High(GREEN_GPIO_PORT, GREEN_GPIO_PIN);   // 打开红灯，表示程序等待开始
+			}
 			GPIO_Low(RED_GPIO_PORT, RED_GPIO_PIN);
 			GPIO_High(GREEN_GPIO_PORT, GREEN_GPIO_PIN);   // 打开红灯，表示程序等待开始
 	  }
@@ -483,13 +525,41 @@ int main(void)
 
 
 
-// 向Nano传递高电平IO信号
+// 向Nano传递高电平IO信号（已废弃）
 void NanoIOHigh()
 {
 	GPIO_High(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
 	Delay(5);
 	GPIO_Low(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
 }
+
+// 第一次给Nano发信号，拍照片
+void NanoIOHigh1(){
+	GPIO_Low(NANO5_GPIO_PORT, NANO5_GPIO_PIN);
+	GPIO_High(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
+	Delay(8);
+	GPIO_Low(NANO5_GPIO_PORT, NANO5_GPIO_PIN);
+	GPIO_Low(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
+}      
+
+
+// 第二次给Nano发信号，爪子张开
+void NanoIOHigh2(){
+  GPIO_High(NANO5_GPIO_PORT, NANO5_GPIO_PIN);
+	GPIO_Low(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
+	Delay(8);
+	GPIO_Low(NANO5_GPIO_PORT, NANO5_GPIO_PIN);
+	GPIO_Low(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
+}  
+
+// 第三次给Nano发信号，抓取
+void NanoIOHigh3(){
+	GPIO_High(NANO5_GPIO_PORT, NANO5_GPIO_PIN);
+	GPIO_High(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
+	Delay(8);
+	GPIO_Low(NANO5_GPIO_PORT, NANO5_GPIO_PIN);
+	GPIO_Low(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
+}   
 
 
 // LCD 屏显示数字函数

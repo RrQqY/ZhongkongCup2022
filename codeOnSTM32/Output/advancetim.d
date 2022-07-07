@@ -2,7 +2,7 @@
 ..\..\output\advancetim.o: ..\..\User\AdvanceTim\AdvanceTim.h
 ..\..\output\advancetim.o: ..\..\Libraries\CMSIS\stm32f10x.h
 ..\..\output\advancetim.o: ..\..\Libraries\CMSIS\core_cm3.h
-..\..\output\advancetim.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\advancetim.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\..\output\advancetim.o: ..\..\Libraries\CMSIS\system_stm32f10x.h
 ..\..\output\advancetim.o: ..\..\User\stm32f10x_conf.h
 ..\..\output\advancetim.o: ..\..\Libraries\FWlib\inc\stm32f10x_adc.h

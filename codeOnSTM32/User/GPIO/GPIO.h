@@ -29,6 +29,11 @@
 #define START_GPIO_PORT           GPIOA
 #define START_GPIO_CLK            RCC_APB2Periph_GPIOA
 
+// Æô¶¯°´Å¥£¨KEY2£©
+#define FAKE_GPIO_PIN            GPIO_Pin_13
+#define FAKE_GPIO_PORT           GPIOC
+#define FAKE_GPIO_CLK            RCC_APB2Periph_GPIOC
+
 // ºìµÆ
 #define RED_GPIO_PIN              GPIO_Pin_5
 #define RED_GPIO_PORT             GPIOB

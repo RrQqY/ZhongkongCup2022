@@ -19,7 +19,7 @@
 #define FowardSpeed         78            // 直行速度
 #define FowardSpeed_Right   80            // 右轮直行速度
 #define FowardSpeed_Left    80            // 左轮直行速度
-#define PreSlow             40            // 数到线前提前减速
+#define PreSlow             42            // 数到线前提前减速
 
 // PID参数宏定义                      
 #define KP    10
@@ -42,6 +42,7 @@ void Forward(int Line_Count);        // 巡线直行 n 根线
 void Back(int Line_Count);           // 巡线后退 n 根线
 void Forward_Front(int Line_Count);  // 巡线直行 n 根线（前七路数线）。在1代方案中走到货架前时使用
 void Back_Front(int Line_Count);     // 巡线后退 n 根线（前七路数线）。在从基地出发时左转前使用
+void Back_Front_Start(int Line_Count);     // 巡线后退 n 根线（前七路数线）。在从基地出发时左转前使用
 void Front_Back(int Line_Count);     // 前进 n 根线（后七路数线，不巡线）。在一侧货架走完，撞墙后后退时使用
 void Back_Slide(int Line_Count);     // 靠侧面三灰度巡线直行 n 根线
 void Right(void);                    // 右转

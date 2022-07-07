@@ -2,7 +2,7 @@
 ..\..\output\mpu6050.o: ..\..\User\mpu6050\mpu6050.h
 ..\..\output\mpu6050.o: ..\..\Libraries\CMSIS\stm32f10x.h
 ..\..\output\mpu6050.o: ..\..\Libraries\CMSIS\core_cm3.h
-..\..\output\mpu6050.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\mpu6050.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\..\output\mpu6050.o: ..\..\Libraries\CMSIS\system_stm32f10x.h
 ..\..\output\mpu6050.o: ..\..\User\stm32f10x_conf.h
 ..\..\output\mpu6050.o: ..\..\Libraries\FWlib\inc\stm32f10x_adc.h
@@ -30,12 +30,12 @@
 ..\..\output\mpu6050.o: ..\..\Libraries\FWlib\inc\stm32f10x_wwdg.h
 ..\..\output\mpu6050.o: ..\..\Libraries\FWlib\inc\misc.h
 ..\..\output\mpu6050.o: ..\..\User\main.h
-..\..\output\mpu6050.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+..\..\output\mpu6050.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\..\output\mpu6050.o: ..\..\User\GPIO\GPIO.h
 ..\..\output\mpu6050.o: ..\..\User\SysTick\systick.h
 ..\..\output\mpu6050.o: ..\..\User\AdvanceTim\AdvanceTim.h
 ..\..\output\mpu6050.o: ..\..\User\USART\usart.h
-..\..\output\mpu6050.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+..\..\output\mpu6050.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 ..\..\output\mpu6050.o: ..\..\User\./lcd/bsp_ili9341_lcd.h
 ..\..\output\mpu6050.o: ..\..\User\./font/fonts.h
 ..\..\output\mpu6050.o: ..\..\User\./font/fonts.h
@@ -43,5 +43,5 @@
 ..\..\output\mpu6050.o: ..\..\User\Move\Move.h
 ..\..\output\mpu6050.o: ..\..\User\main.h
 ..\..\output\mpu6050.o: ..\..\User\I2C\I2C.h
-..\..\output\mpu6050.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\inttypes.h
+..\..\output\mpu6050.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\inttypes.h
 ..\..\output\mpu6050.o: ..\..\User\mpu6050\mpu6050.h

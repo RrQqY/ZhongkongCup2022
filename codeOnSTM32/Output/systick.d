@@ -2,7 +2,7 @@
 ..\..\output\systick.o: ..\..\User\SysTick\systick.h
 ..\..\output\systick.o: ..\..\Libraries\CMSIS\stm32f10x.h
 ..\..\output\systick.o: ..\..\Libraries\CMSIS\core_cm3.h
-..\..\output\systick.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\systick.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\..\output\systick.o: ..\..\Libraries\CMSIS\system_stm32f10x.h
 ..\..\output\systick.o: ..\..\User\stm32f10x_conf.h
 ..\..\output\systick.o: ..\..\Libraries\FWlib\inc\stm32f10x_adc.h

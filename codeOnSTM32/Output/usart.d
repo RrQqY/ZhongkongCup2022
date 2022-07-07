@@ -1,9 +1,9 @@
 ..\..\output\usart.o: ..\..\User\USART\usart.c
 ..\..\output\usart.o: ..\..\User\USART\usart.h
-..\..\output\usart.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+..\..\output\usart.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 ..\..\output\usart.o: ..\..\Libraries\CMSIS\stm32f10x.h
 ..\..\output\usart.o: ..\..\Libraries\CMSIS\core_cm3.h
-..\..\output\usart.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\usart.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\..\output\usart.o: ..\..\Libraries\CMSIS\system_stm32f10x.h
 ..\..\output\usart.o: ..\..\User\stm32f10x_conf.h
 ..\..\output\usart.o: ..\..\Libraries\FWlib\inc\stm32f10x_adc.h
@@ -32,7 +32,7 @@
 ..\..\output\usart.o: ..\..\Libraries\FWlib\inc\misc.h
 ..\..\output\usart.o: ..\..\User\GPIO\GPIO.h
 ..\..\output\usart.o: ..\..\User\main.h
-..\..\output\usart.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+..\..\output\usart.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\..\output\usart.o: ..\..\User\SysTick\systick.h
 ..\..\output\usart.o: ..\..\User\AdvanceTim\AdvanceTim.h
 ..\..\output\usart.o: ..\..\User\./lcd/bsp_ili9341_lcd.h
@@ -42,6 +42,6 @@
 ..\..\output\usart.o: ..\..\User\Move\Move.h
 ..\..\output\usart.o: ..\..\User\main.h
 ..\..\output\usart.o: ..\..\User\I2C\I2C.h
-..\..\output\usart.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\inttypes.h
+..\..\output\usart.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\inttypes.h
 ..\..\output\usart.o: ..\..\User\mpu6050\mpu6050.h
-..\..\output\usart.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+..\..\output\usart.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h

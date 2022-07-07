@@ -9,10 +9,10 @@ Servo ser5;
 Servo ser6;
 
 // 从Nano传回的舵机控制信号的检测IO口
-int io1 = 8;
-int io2 = 9;
-int io3 = 10;
-int io4 = 11;
+int io1 = 2;
+int io2 = 4;
+int io3 = 7;
+int io4 = 8;
 int io5 = 12;
 int io6 = 13;
 
@@ -101,12 +101,12 @@ void setup(){
   pinMode(io5, INPUT);
   pinMode(io6, INPUT);
   
-  ser1.attach(2);           // 舵机初始化
-  ser2.attach(3);
-  ser3.attach(4);
-  ser4.attach(5);
-  ser5.attach(6);
-  ser6.attach(7);
+  ser1.attach(3);           // 舵机初始化
+  ser2.attach(5);
+  ser3.attach(6);
+  ser4.attach(9);
+  ser5.attach(10);
+  ser6.attach(11);
 
   strcpy(nanoFlag, "a000000");
   ServoAction();
@@ -128,6 +128,19 @@ void loop()
 //      i = 0;
 //    }
 //  }
+
+//  char flag;
+//  char flag_old;
+//  flag = Serial.read();
+//  if(flag == '1') {nanoFlag[1] = '1'; nanoFlag[2] = '0'; nanoFlag[3] = '0'; nanoFlag[4] = '0'; nanoFlag[5] = '0'; nanoFlag[6] = '0';}
+//  else if(flag == '2') {nanoFlag[2] = '1'; nanoFlag[1] = '0'; nanoFlag[3] = '0'; nanoFlag[4] = '0'; nanoFlag[5] = '0'; nanoFlag[6] = '0';}
+//  else if(flag == '3') {nanoFlag[3] = '1'; nanoFlag[1] = '0'; nanoFlag[2] = '0'; nanoFlag[4] = '0'; nanoFlag[5] = '0'; nanoFlag[6] = '0';}
+//  else if(flag == '4') {nanoFlag[4] = '1'; nanoFlag[1] = '0'; nanoFlag[2] = '0'; nanoFlag[3] = '0'; nanoFlag[5] = '0'; nanoFlag[6] = '0';}
+//  else if(flag == '5') {nanoFlag[5] = '1'; nanoFlag[1] = '0'; nanoFlag[2] = '0'; nanoFlag[3] = '0'; nanoFlag[4] = '0'; nanoFlag[6] = '0';}
+//  else if(flag == '6') {nanoFlag[6] = '1'; nanoFlag[1] = '0'; nanoFlag[2] = '0'; nanoFlag[3] = '0'; nanoFlag[4] = '0'; nanoFlag[5] = '0';}
+//  else flag = flag_old;
+//  flag_old = flag;
+
   if(digitalRead(io1) == HIGH) nanoFlag[1] = '1'; else if(digitalRead(io1) == LOW) nanoFlag[1] = '0';
   if(digitalRead(io2) == HIGH) nanoFlag[2] = '1'; else if(digitalRead(io2) == LOW) nanoFlag[2] = '0';
   if(digitalRead(io3) == HIGH) nanoFlag[3] = '1'; else if(digitalRead(io3) == LOW) nanoFlag[3] = '0';

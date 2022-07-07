@@ -40,7 +40,10 @@ extern int task_readdata_finish;         // 读取MPU6050数据标志
 extern int POS[6];                       // 上位机返回抓取位置信息
 extern uint8_t Nano_Buff[8];
 extern int flag_get;
-extern void NanoIOHigh();
+extern void NanoIOHigh();                // 给Nano发信号（已废弃）
+extern void NanoIOHigh1();               // 第一次给Nano发信号，拍照片
+extern void NanoIOHigh2();               // 第二次给Nano发信号，爪子张开
+extern void NanoIOHigh3();               // 第三次给Nano发信号，抓取
 static void LCD_Test(void);	
 extern void LCD_Printn(int line, uint32_t num);            // LCD 屏显示数字
 extern void LCD_Prints(int line, char dispBuff[]);         // LCD 屏显示英文字符串

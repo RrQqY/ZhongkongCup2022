@@ -8,6 +8,7 @@ void GPIO_Config(void)
 //	RCC_APB2PeriphClockCmd(TRACK_GPIO_CLK, ENABLE);
 	RCC_APB2PeriphClockCmd(SLIDE_GPIO_CLK, ENABLE);
 	RCC_APB2PeriphClockCmd(START_GPIO_CLK, ENABLE);
+	RCC_APB2PeriphClockCmd(FAKE_GPIO_CLK, ENABLE);
 	RCC_APB2PeriphClockCmd(RED_GPIO_CLK, ENABLE);
 	RCC_APB2PeriphClockCmd(GREEN_GPIO_CLK, ENABLE);
 	RCC_APB2PeriphClockCmd(BLUE_GPIO_CLK, ENABLE);
@@ -68,6 +69,10 @@ void GPIO_Config(void)
 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN_FLOATING;     // 浮空输入模式（按钮信号输入要浮空输入）
 	GPIO_InitStruct.GPIO_Pin = START_GPIO_PIN;
 	GPIO_Init(START_GPIO_PORT, &GPIO_InitStruct);
+	
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN_FLOATING;     // 浮空输入模式（按钮信号输入要浮空输入）
+	GPIO_InitStruct.GPIO_Pin = FAKE_GPIO_PIN;
+	GPIO_Init(FAKE_GPIO_PORT, &GPIO_InitStruct);
 	
 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_Out_PP;          // 推挽输出模式（控制普通IO输出要推挽输出）
 	GPIO_InitStruct.GPIO_Pin = RED_GPIO_PIN;
