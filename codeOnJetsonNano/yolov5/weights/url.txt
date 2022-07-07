@@ -1,0 +1,12 @@
+
+1. yolov5s.pt
+https://drive.google.com/uc?export=download&id=1R5T6rIyy3lLwgFXNms8whc-387H0tMQO
+
+2. yolov5m.pt
+https://drive.google.com/uc?export=download&id=1vobuEExpWQVpXExsJ2w-Mbf3HJjWkQJr
+
+3. yolov5l.pt
+https://drive.google.com/uc?export=download&id=1hrlqD1Wdei7UT4OgT785BEk1JwnSvNEV
+
+4. yolov5x.pt
+https://drive.google.com/uc?export=download&id=1mM8aZJlWTxOg7BZJvNUMrTnA2AbeCVzS

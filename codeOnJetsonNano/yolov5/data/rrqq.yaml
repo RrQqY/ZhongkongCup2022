@@ -1,0 +1,8 @@
+train: C:/Users/2022/Desktop/yolov5/rrqq/train.txt
+val: C:/Users/2022/Desktop/yolov5/rrqq/val.txt
+
+# number of classes
+nc: 5
+
+# class names
+names: ['dp', 'red', 'blue', 'beer', 'cube']

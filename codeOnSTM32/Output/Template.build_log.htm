@@ -27,7 +27,34 @@ Project File Date:  02/10/2022
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'LCD'
-"..\..\Output\Template.axf" - 0 Error(s), 0 Warning(s).
+compiling main.c...
+..\..\User\AdvanceTim\AdvanceTim.h(116): warning:  #1295-D: Deprecated declaration ADVANCE_TIM_Init - give arg types
+  void ADVANCE_TIM_Init();                             // TIM 总初始化
+..\..\User\USART\usart.h(154): warning:  #1295-D: Deprecated declaration NanoStart - give arg types
+  void NanoStart();                                                             // 向nano发送起始信号
+..\..\User\USART\usart.h(160): warning:  #1295-D: Deprecated declaration NanoCatch - give arg types
+  void NanoCatch();
+..\..\User\main.h(43): warning:  #1295-D: Deprecated declaration NanoIOHigh - give arg types
+  extern void NanoIOHigh();                // 给Nano发信号（已废弃）
+..\..\User\main.h(44): warning:  #1295-D: Deprecated declaration NanoIOHigh1 - give arg types
+  extern void NanoIOHigh1();               // 第一次给Nano发信号，拍照片
+..\..\User\main.h(45): warning:  #1295-D: Deprecated declaration NanoIOHigh2 - give arg types
+  extern void NanoIOHigh2();               // 第二次给Nano发信号，爪子张开
+..\..\User\main.h(46): warning:  #1295-D: Deprecated declaration NanoIOHigh3 - give arg types
+  extern void NanoIOHigh3();               // 第三次给Nano发信号，抓取
+..\..\User\main.h(53): warning:  #1295-D: Deprecated declaration Test1 - give arg types
+  extern void Test1();            // 1代方案测试
+..\..\User\main.h(54): warning:  #1295-D: Deprecated declaration Test2 - give arg types
+  extern void Test2();            // 2代方案测试
+..\..\User\main.h(55): warning:  #1295-D: Deprecated declaration OneSideAction - give arg types
+  extern void OneSideAction();    // 一侧货架的执行函数：向前走六格，每格进行一次识别、抓取操作
+..\..\User\main.h(56): warning:  #1295-D: Deprecated declaration OneGridAction - give arg types
+  extern void OneGridAction();    // 一格货架的执行函数：进行一次识别、抓取操作
+..\..\User\main.c: 11 warnings, 0 errors
+linking...
+Program Size: Code=17056 RO-data=15536 RW-data=540 ZI-data=1756  
+FromELF: creating hex file...
+"..\..\Output\Template.axf" - 0 Error(s), 11 Warning(s).
 
 <h2>Software Packages used:</h2>
 

@@ -492,7 +492,7 @@ void Front_Back(int Line_Count) {
 //	// 先转一段，跨过黑线
 	GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
   GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
-  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right);
+  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right + 1);
   Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left);
 	Delay(750);
 	
@@ -509,8 +509,8 @@ void Front_Back(int Line_Count) {
 		
 		// 在线前提前减速
 		if ((Seven_Read(left, 1) == high) || (Seven_Read(right, 1)) == high) {        // 中间的前一个灰度数到线时先减速
-		  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right - PreSlow-5);
-      Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left - PreSlow-5);
+		  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right - PreSlow);
+      Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left - PreSlow);
 	  }
 		
 //		// 在线前转正
@@ -667,7 +667,7 @@ void Front_Back(int Line_Count) {
 //	                           Seven_Read(right, 6), 
 //		                         Seven_Read(right, 7)));
 														 
-	  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right-15);
+	  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right-14);
 		Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left-15);
 		GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);    // 左轮 High ，右轮 Low 向前；左轮 Low ，右轮 High 向后
 		GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
@@ -830,10 +830,10 @@ void Right(void)
 // 利用MPU6050左转
 void Left_MPU(int angle)
 {
-	angle = angle - 3;      // 补偿角度，少转1度
+	angle = angle+2;      // 补偿角度，少转1度
 	char cStr [ 70 ];
   int target_angle;
-	target_angle = Angle[2] + angle + 1;
+	target_angle = Angle[2] + angle;
 	SysTick_Init();                                     // 重新初始化systick，防止被delay功能干扰
 	
   while(1){	
@@ -860,7 +860,7 @@ void Left_MPU(int angle)
 // 利用MPU6050右转
 void Right_MPU(int angle)
 {
-	angle = angle - 2;      // 补偿角度，少转1度
+	angle = angle+3;      // 补偿角度，少转1度
 	char cStr [ 70 ];
 	int target_angle;
 	target_angle = Angle[2] - angle - 1;

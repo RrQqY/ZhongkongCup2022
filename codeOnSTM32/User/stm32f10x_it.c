@@ -211,7 +211,7 @@ void SysTick_Handler(void)
 	/* 任务1：MPU6050任务 */
 	if( ! task_readdata_finish ){
 		MPU6050ReadGyro(Gyro);
-		gyroZ = ((Gyro[2]-25.5)/16.4f)*3.40f;          // 减的越大零偏跃靠近负数，调整系数越小转的越多
+		gyroZ = ((Gyro[2]-29)/15.9f)*3.40f;          // 减的越大零偏跃靠近负数，调整系数越小转的越多
 		integralZ += gyroZ * dt;
 		
 		task_readdata_finish = 1; //标志位置1，表示需要在主循环处理MPU6050数据

@@ -124,7 +124,7 @@ void Test2()
 	// 巡线直走直到前七路数到线，然后左转，让侧三路压在线上
 	Back_Front_Start(1);    // 巡线一格（前七路数线）
 	Delay(300);
-	Left_MPU(90);     // 左转
+	Left_MPU(91);     // 左转
 	Delay(300);
 	
 	Back_Slide(1);
@@ -179,9 +179,9 @@ void OneSideAction()
 	// 走完一侧货架后，向前冲一段时间，撞墙矫正
 	GPIO_High(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走（额外加速撞墙）
   GPIO_Low(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
-  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right + 35);
-  Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left + 35);
-	Delay(2700);
+  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right + 52);
+  Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left + 36);
+	Delay(3000);
 	
 	// 后退（不巡线）至后七路数到线，然后右转，让侧三路再次压在线上
 	Front_Back(1);    // 巡线一格（后七路数线）
@@ -248,6 +248,14 @@ void OneGridAction_fake()
 	Delay(1000);
 	
 	Delay(3500);
+	NanoIOHigh1();      // 第一次给Nano发信号，拍照片
+	Delay(1500);
+	NanoIOHigh2();      // 第二次给Nano发信号，爪子张开
+	Delay(1600);
+	NanoIOHigh3();      // 第三次给Nano发信号，抓取
+	Delay(1000);
+	
+	Delay(2500);
 	NanoIOHigh1();      // 第一次给Nano发信号，拍照片
 	Delay(1500);
 	NanoIOHigh2();      // 第二次给Nano发信号，爪子张开
@@ -363,6 +371,7 @@ void start(void){
 
 //  OneGridAction_fake();      // 赛前抽风（提前模拟检测三次）
 	Test2();
+//	Right_MPU(90);     // 左转
 //	OneGridAction();           // 做一格
 //	OneSideAction();           // 做一侧
 	
@@ -537,7 +546,7 @@ void NanoIOHigh()
 void NanoIOHigh1(){
 	GPIO_Low(NANO5_GPIO_PORT, NANO5_GPIO_PIN);
 	GPIO_High(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
-	Delay(8);
+	Delay(15);
 	GPIO_Low(NANO5_GPIO_PORT, NANO5_GPIO_PIN);
 	GPIO_Low(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
 }      
@@ -547,7 +556,7 @@ void NanoIOHigh1(){
 void NanoIOHigh2(){
   GPIO_High(NANO5_GPIO_PORT, NANO5_GPIO_PIN);
 	GPIO_Low(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
-	Delay(8);
+	Delay(15);
 	GPIO_Low(NANO5_GPIO_PORT, NANO5_GPIO_PIN);
 	GPIO_Low(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
 }  
@@ -556,7 +565,7 @@ void NanoIOHigh2(){
 void NanoIOHigh3(){
 	GPIO_High(NANO5_GPIO_PORT, NANO5_GPIO_PIN);
 	GPIO_High(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
-	Delay(8);
+	Delay(15);
 	GPIO_Low(NANO5_GPIO_PORT, NANO5_GPIO_PIN);
 	GPIO_Low(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
 }   
