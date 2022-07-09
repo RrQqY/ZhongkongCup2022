@@ -21,13 +21,13 @@ Target DLL:      CMSIS_AGDI.dll V1.30.6.0
 Dialog DLL:      TCM.DLL V1.36.1.0
  
 <h2>Project:</h2>
-C:\Users\asus\OneDrive - zju.edu.cn\ZJU\2021.11第17届中控杯\ZhongkongCup2022\codeOnSTM32\Project\RVMDK（uv5）\BH-F103.uvprojx
+C:\Users\asus\OneDrive - zju.edu.cn\ZJU\2021.11_17thZkb\ZhongkongCup2022\codeOnSTM32\Project\RVMDK（uv5）\BH-F103.uvprojx
 Project File Date:  02/10/2022
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'LCD'
-compiling main.c...
+compiling Move.c...
 ..\..\User\AdvanceTim\AdvanceTim.h(116): warning:  #1295-D: Deprecated declaration ADVANCE_TIM_Init - give arg types
   void ADVANCE_TIM_Init();                             // TIM 总初始化
 ..\..\User\USART\usart.h(154): warning:  #1295-D: Deprecated declaration NanoStart - give arg types
@@ -50,11 +50,27 @@ compiling main.c...
   extern void OneSideAction();    // 一侧货架的执行函数：向前走六格，每格进行一次识别、抓取操作
 ..\..\User\main.h(56): warning:  #1295-D: Deprecated declaration OneGridAction - give arg types
   extern void OneGridAction();    // 一格货架的执行函数：进行一次识别、抓取操作
-..\..\User\main.c: 11 warnings, 0 errors
+..\..\User\Move\Move.c(89): warning:  #111-D: statement is unreachable
+  						correct_count = 0;
+..\..\User\Move\Move.c(113): warning:  #111-D: statement is unreachable
+  						correct_count = 0;
+..\..\User\Move\Move.c(541): warning:  #111-D: statement is unreachable
+  						correct_count = 0;
+..\..\User\Move\Move.c(565): warning:  #111-D: statement is unreachable
+  						correct_count = 0;
+..\..\User\Move\Move.c(1203): warning:  #111-D: statement is unreachable
+  						correct_count = 0;
+..\..\User\Move\Move.c(1227): warning:  #111-D: statement is unreachable
+  						correct_count = 0;
+..\..\User\Move\Move.c(1619): warning:  #111-D: statement is unreachable
+  						correct_count = 0;
+..\..\User\Move\Move.c(1643): warning:  #111-D: statement is unreachable
+  						correct_count = 0;
+..\..\User\Move\Move.c: 19 warnings, 0 errors
 linking...
-Program Size: Code=17056 RO-data=15536 RW-data=540 ZI-data=1756  
+Program Size: Code=16972 RO-data=15536 RW-data=612 ZI-data=1780  
 FromELF: creating hex file...
-"..\..\Output\Template.axf" - 0 Error(s), 11 Warning(s).
+"..\..\Output\Template.axf" - 0 Error(s), 19 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -68,7 +84,7 @@ Package Vendor: Keil
   D:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:00
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>

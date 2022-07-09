@@ -325,7 +325,7 @@ void Back_Front_Start(int Line_Count) {
 	  }
 		flag = 1;
 	  if ((flag == 1) && 
-			  ((Seven_Read(front, 1) == high) || (Seven_Read(front, 7)) == high)){     // 由黑色变为白色，计数一次
+			  ((Seven_Read(front, 1) == high) && (Seven_Read(front, 7)) == high)){     // 由黑色变为白色，计数一次
 		  Temp_Count ++;                                                             
 		  flag = 0;
 	  }
@@ -389,7 +389,7 @@ void Back_Front_Start(int Line_Count) {
 //	                           Seven_Read(right, 6), 
 //		                         Seven_Read(right, 7)));
 														 
-	  PIDBack();                                                   // 开始PID循线
+	  PIDBack_Start();                                                   // 开始PID循线
 		Delay(50);
 	}
 }
@@ -492,9 +492,9 @@ void Front_Back(int Line_Count) {
 //	// 先转一段，跨过黑线
 	GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
   GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
-  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right + 1);
+  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right + 2);
   Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left);
-	Delay(750);
+	Delay(650);
 	
 	while (1) {
     if (Seven_Read(left, 4) == low) {                          // 检测到黑色，开启计数准备
@@ -667,7 +667,7 @@ void Front_Back(int Line_Count) {
 //	                           Seven_Read(right, 6), 
 //		                         Seven_Read(right, 7)));
 														 
-	  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right-14);
+	  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right-13);
 		Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left-15);
 		GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);    // 左轮 High ，右轮 Low 向前；左轮 Low ，右轮 High 向后
 		GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
@@ -1282,6 +1282,115 @@ void Back(int Line_Count) {
 	  PIDBack();                                                   // 开始PID循线
 		Delay(50);
 	}
+}
+
+
+// 倒着 PID 巡线（开始）
+void PIDBack_Start(void)
+{
+	GPIO_High(RED_GPIO_PORT, RED_GPIO_PIN);          // 打开蓝灯，表示正在PID巡线
+  GPIO_High(GREEN_GPIO_PORT, GREEN_GPIO_PIN);
+	GPIO_Low(BLUE_GPIO_PORT, BLUE_GPIO_PIN);
+	
+	static int sensor[7];
+	static double error = 0;
+	static double P = 0, I = 0, D = 0;
+	static double Kp = KP, Ki = KI, Kd = KD;         // PID 系数
+	static double PID_value;
+	static int previous_error = 0;
+	
+  sensor[6] = GPIO_Read(BACKSEVEN1_GPIO_PORT, BACKSEVEN1_GPIO_PIN);
+	sensor[5] = GPIO_Read(BACKSEVEN2_GPIO_PORT, BACKSEVEN2_GPIO_PIN);
+	sensor[4] = GPIO_Read(BACKSEVEN3_GPIO_PORT, BACKSEVEN3_GPIO_PIN);
+	sensor[3] = GPIO_Read(BACKSEVEN4_GPIO_PORT, BACKSEVEN4_GPIO_PIN);
+	sensor[2] = GPIO_Read(BACKSEVEN5_GPIO_PORT, BACKSEVEN5_GPIO_PIN);
+	sensor[1] = GPIO_Read(BACKSEVEN6_GPIO_PORT, BACKSEVEN6_GPIO_PIN);
+	sensor[0] = GPIO_Read(BACKSEVEN7_GPIO_PORT, BACKSEVEN7_GPIO_PIN);
+	
+//	if (sensor[0] == low && sensor[1] == low && sensor[2] == low && sensor[3] == low && sensor[4] == low && sensor[5] == low && sensor[6] == high) {
+//		error = 6;
+//	}
+//	else if (sensor[0] == low && sensor[1] == low && sensor[2] == low && sensor[3] == low && sensor[4] == low && sensor[5] == high && sensor[6] == high) {
+//		error = 5;
+//	}
+//	else if (sensor[0] == low && sensor[1] == low && sensor[2] == low && sensor[3] == low && sensor[4] == low && sensor[5] == high && sensor[6] == low) {
+//		error = 4;
+//	}
+//	else if (sensor[0] == low && sensor[1] == low && sensor[2] == low && sensor[3] == low && sensor[4] == high && sensor[5] == high && sensor[6] == low) {
+//		error = 3;
+//	}
+//	else if (sensor[0] == low && sensor[1] == low && sensor[2] == low && sensor[3] == low && sensor[4] == high && sensor[5] == low && sensor[6] == low) {
+//		error = 2;
+//	}
+//	else if (sensor[0] == low && sensor[1] == low && sensor[2] == low && sensor[3] == high && sensor[4] == high && sensor[5] == low && sensor[6] == low) {
+//		error = 1;
+//	}
+//	else if ((sensor[0] == low && sensor[1] == low && sensor[2] == low && sensor[3] == high && sensor[4] == low && sensor[5] == low && sensor[6] == low) ||
+//		       (sensor[0] == high && sensor[1] == high && sensor[2] == high && sensor[3] == high && sensor[4] == high && sensor[5] == high && sensor[6] == high)) {
+//		error = 0;
+//	}
+//	else if (sensor[0] == low && sensor[1] == low && sensor[2] == high && sensor[3] == high && sensor[4] == low && sensor[5] == low && sensor[6] == low) {
+//		error = -1;
+//	}
+//	else if (sensor[0] == low && sensor[1] == low && sensor[2] == high && sensor[3] == low && sensor[4] == low && sensor[5] == low && sensor[6] == low) {
+//		error = -2;
+//	}
+//	else if (sensor[0] == low && sensor[1] == high && sensor[2] == high && sensor[3] == low && sensor[4] == low && sensor[5] == low && sensor[6] == low) {
+//		error = -3;
+//	}
+//	else if (sensor[0] == low && sensor[1] == high && sensor[2] == low && sensor[3] == low && sensor[4] == low && sensor[5] == low && sensor[6] == low) {
+//		error = -4;
+//	}
+//	else if (sensor[0] == high && sensor[1] == high && sensor[2] == low && sensor[3] == low && sensor[4] == low && sensor[5] == low && sensor[6] == low) {
+//		error = -5;
+//	}
+//	else if (sensor[0] == high && sensor[1] == low && sensor[2] == low && sensor[3] == low && sensor[4] == low && sensor[5] == low && sensor[6] == low) {
+//		error = -6;
+//	}
+//	else if (sensor[0] == low && sensor[1] == low && sensor[2] == low && sensor[3] == low && sensor[4] == low && sensor[5] == low && sensor[6] == low) {
+//		if (previous_error == -6) {
+//			error = -7;
+//		}
+//		else if(previous_error == 6){
+//			error = 7;
+//		}
+//		else{
+//		  error = 0;
+//		}
+//	}
+
+	static int switch_value = 0;
+	switch_value = 1 * sensor[0] + 3 * sensor[1] + 5 * sensor[2] + 7 * sensor[3] + 9 * sensor[4] + 11 * sensor[5] + 13 * sensor[6];
+	switch (switch_value) {
+		case 48:error = -3.5; break;
+		case 45:error = -3; break;
+		case 40:error = -2.5; break;
+		case 41:error = -2; break;
+		case 34:error = -1.5; break;
+		case 37:error = -1; break;
+		case 28:error = -0; break;
+		case 33:error = 1; break;
+		case 22:error = 1.5; break;
+		case 29:error = 2; break;
+		case 16:error = 2.5; break;
+		case 25:error = 3; break;
+		case 36:error = 3.5; break;
+		case 49:if (error == 6)error = 7;
+					  else error = -7;
+					  break;
+		default:break;
+	}
+	
+	P = error;
+	I = I + error;
+	D = error - previous_error;
+	PID_value = Kp * P + Ki * I + Kd * D;
+	previous_error = error;
+	
+	Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right -5  + PID_value);
+	Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left -5  - PID_value);
+	GPIO_High(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);    // 左轮 High ，右轮 Low 向前；左轮 Low ，右轮 High 向后
+	GPIO_Low(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
 }
 
 

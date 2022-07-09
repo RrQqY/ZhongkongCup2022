@@ -52,7 +52,12 @@ POS = [0,0,0,0,0,0]
 channel1 = 37
 channel2 = 18
 
-confident_threshold = 0.91        #0.81
+confident_threshold = 0.91          #0.81
+confident_threshold_0 = 0.80        #0.91
+confident_threshold_1 = 0.80        #0.94
+confident_threshold_2 = 0.80        #0.85
+confident_threshold_3 = 0.80        #0.85
+confident_threshold_4 = 0.65        #0.81
 
 # kit = ServoKit(channels = 8)
 
@@ -307,10 +312,31 @@ def run(weights=ROOT / 'weights/zkb_ss.pt',   # model.pt path(s)
                         xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4))).view(-1).tolist()
                         pos = getPos(xywh)
                         if pos != 0:
-                            if (conf.cpu().numpy() > confident_threshold):
-                                print('@ ', pos, conf.cpu().numpy(), cls.cpu().numpy())
-                                print(xywh)
-                                POS[pos-1] = 1
+                            if cls.cpu().numpy() == 0:
+                                if (conf.cpu().numpy() > confident_threshold_0):
+                                    print('@ ', pos, conf.cpu().numpy(), cls.cpu().numpy())
+                                    print(confident_threshold_0)
+                                    POS[pos-1] = 1
+                            elif cls.cpu().numpy() == 1:
+                                if (conf.cpu().numpy() > confident_threshold_1):
+                                    print('@ ', pos, conf.cpu().numpy(), cls.cpu().numpy())
+                                    print(confident_threshold_1)
+                                    POS[pos-1] = 1
+                            elif cls.cpu().numpy() == 2:
+                                if (conf.cpu().numpy() > confident_threshold_2):
+                                    print('@ ', pos, conf.cpu().numpy(), cls.cpu().numpy())
+                                    print(confident_threshold_2)
+                                    POS[pos-1] = 1
+                            elif cls.cpu().numpy() == 3:
+                                if (conf.cpu().numpy() > confident_threshold_3):
+                                    print('@ ', pos, conf.cpu().numpy(), cls.cpu().numpy())
+                                    print(confident_threshold_3)
+                                    POS[pos-1] = 1
+                            elif cls.cpu().numpy() == 4:
+                                if (conf.cpu().numpy() > confident_threshold_4):
+                                    print('@ ', pos, conf.cpu().numpy(), cls.cpu().numpy())
+                                    print(confident_threshold_4)
+                                    POS[pos-1] = 1
                         else:
                             print('@ no object')
                         

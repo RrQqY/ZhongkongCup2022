@@ -124,7 +124,7 @@ void Test2()
 	// 巡线直走直到前七路数到线，然后左转，让侧三路压在线上
 	Back_Front_Start(1);    // 巡线一格（前七路数线）
 	Delay(300);
-	Left_MPU(91);     // 左转
+	Left_MPU(92);     // 左转
 	Delay(300);
 	
 	Back_Slide(1);
@@ -186,7 +186,7 @@ void OneSideAction()
 	// 后退（不巡线）至后七路数到线，然后右转，让侧三路再次压在线上
 	Front_Back(1);    // 巡线一格（后七路数线）
 	Delay(300);
-	Right_MPU(88);
+	Right_MPU(89);
 	Delay(300);
 }
 
@@ -546,9 +546,9 @@ void NanoIOHigh()
 void NanoIOHigh1(){
 	GPIO_Low(NANO5_GPIO_PORT, NANO5_GPIO_PIN);
 	GPIO_High(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
-	Delay(15);
-	GPIO_Low(NANO5_GPIO_PORT, NANO5_GPIO_PIN);
-	GPIO_Low(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
+//	Delay(15);
+//	GPIO_Low(NANO5_GPIO_PORT, NANO5_GPIO_PIN);
+//	GPIO_Low(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
 }      
 
 
@@ -556,18 +556,18 @@ void NanoIOHigh1(){
 void NanoIOHigh2(){
   GPIO_High(NANO5_GPIO_PORT, NANO5_GPIO_PIN);
 	GPIO_Low(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
-	Delay(15);
-	GPIO_Low(NANO5_GPIO_PORT, NANO5_GPIO_PIN);
-	GPIO_Low(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
+//	Delay(15);
+//	GPIO_Low(NANO5_GPIO_PORT, NANO5_GPIO_PIN);
+//	GPIO_Low(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
 }  
 
 // 第三次给Nano发信号，抓取
 void NanoIOHigh3(){
 	GPIO_High(NANO5_GPIO_PORT, NANO5_GPIO_PIN);
 	GPIO_High(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
-	Delay(15);
-	GPIO_Low(NANO5_GPIO_PORT, NANO5_GPIO_PIN);
-	GPIO_Low(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
+//	Delay(15);
+//	GPIO_Low(NANO5_GPIO_PORT, NANO5_GPIO_PIN);
+//	GPIO_Low(NANO6_GPIO_PORT, NANO6_GPIO_PIN);
 }   
 
 
