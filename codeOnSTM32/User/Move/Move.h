@@ -16,9 +16,9 @@
 #define LeftTruningSpeed    70            // 左轮转向速度
 #define RightTruningSpeed   70            // 右轮转向速度
 #define MPUTurningSpeed     65            // MPU转向速度
-#define FowardSpeed         78            // 直行速度
-#define FowardSpeed_Right   80            // 右轮直行速度
-#define FowardSpeed_Left    80            // 左轮直行速度
+#define FowardSpeed         80            // 直行速度（校赛80）
+#define FowardSpeed_Right   80            // 右轮直行速度（校赛80）
+#define FowardSpeed_Left    80            // 左轮直行速度（校赛80）
 #define PreSlow             42            // 数到线前提前减速
 
 // PID参数宏定义                      
@@ -27,7 +27,7 @@
 #define KD    0
 
 // 侧面三灰度PID参数宏定义
-#define KP_grab   11
+#define KP_grab   10
 #define KI_grab   1
 #define KD_grab   0
 

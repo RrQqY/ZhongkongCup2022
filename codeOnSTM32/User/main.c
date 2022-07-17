@@ -112,19 +112,28 @@ void Test2()
 	// 收起购物车夹臂
 	MoveSrv13(0);
 	MoveSrv14(0);
-	Delay(600);
+	Delay(1000);
+	
+	Delay(9000);        // 等待10s再出发
+	
+	// 直行冲出红色区域
+	GPIO_High(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
+  GPIO_Low(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
+  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right - 30);
+  Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left - 30);
+	Delay(200);
 	
 	// 直行冲出红色区域
 	GPIO_High(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
   GPIO_Low(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
   Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right);
   Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left);
-	Delay(1280);
+	Delay(1100);
 	
 	// 巡线直走直到前七路数到线，然后左转，让侧三路压在线上
 	Back_Front_Start(1);    // 巡线一格（前七路数线）
 	Delay(300);
-	Left_MPU(92);     // 左转
+	Left_MPU(90);     // 左转
 	Delay(300);
 	
 	Back_Slide(1);
@@ -175,7 +184,7 @@ void OneSideAction()
 	// ----第六格
 	OneGridAction();
 	Delay(300);
-	
+//	
 	// 走完一侧货架后，向前冲一段时间，撞墙矫正
 	GPIO_High(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走（额外加速撞墙）
   GPIO_Low(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
@@ -374,6 +383,7 @@ void start(void){
 //	Right_MPU(90);     // 左转
 //	OneGridAction();           // 做一格
 //	OneSideAction();           // 做一侧
+//	Back_Slide(1);
 	
 //	// 走完一侧货架后，向前冲一段时间，撞墙矫正
 //	GPIO_High(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走（额外加速撞墙）

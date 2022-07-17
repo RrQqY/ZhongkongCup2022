@@ -325,15 +325,15 @@ void Back_Front_Start(int Line_Count) {
 	  }
 		flag = 1;
 	  if ((flag == 1) && 
-			  ((Seven_Read(front, 1) == high) && (Seven_Read(front, 7)) == high)){     // 由黑色变为白色，计数一次
+			  ((Seven_Read(front, 2) == high) && (Seven_Read(front, 6)) == high)){     // 由黑色变为白色，计数一次
 		  Temp_Count ++;                                                             
 		  flag = 0;
 	  }
 		
 		// 在线前提前减速
 		if ((Seven_Read(left, 5) == high) || (Seven_Read(right, 5)) == high) {        // 中间的前一个灰度数到线时先减速
-		  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right - PreSlow-5);
-      Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left - PreSlow-5);
+		  Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right - PreSlow);
+      Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left - PreSlow);
 			Delay(250);
 	  }
 		
@@ -489,7 +489,7 @@ void Front_Back(int Line_Count) {
   int Temp_Count = 0;                     // 当前所在线数
 	int flag = 0;                           // 开始计数标志
 	
-//	// 先转一段，跨过黑线
+	// 先转一段，跨过黑线
 	GPIO_Low(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);        // 开始直走
   GPIO_High(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
   Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right + 2);
@@ -1739,7 +1739,7 @@ void PID_grab(void)
 	PID_value_grab = Kp_grab * P_grab + Ki_grab * I_grab + Kd_grab * D_grab;
 	previous_error_grab = error_grab;
 	
-	Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right -5 + 0.9*PID_value_grab);
+	Set_Speed(RIGHTWHEEL_PWM_OUT, FowardSpeed_Right -5 + 0.94*PID_value_grab);
 	Set_Speed(LEFTWHEEL_PWM_OUT, FowardSpeed_Left -5 - 0.64*PID_value_grab);    //左轮转动影响较大，速度变化不能过大 
 	GPIO_High(RIGHTWHEEL_GPIO_PORT, RIGHTWHEEL_GPIO_PIN);    
 	GPIO_Low(LEFTWHEEL_GPIO_PORT, LEFTWHEEL_GPIO_PIN);
