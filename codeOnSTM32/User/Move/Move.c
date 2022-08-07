@@ -307,7 +307,7 @@ void Forward_Front(int Line_Count) {
 	}
 }
 
-// 开始时——巡线后退 n 根线（前七路数线）。在从基地出发时左转前使用
+// 巡线后退 n 根线（前七路数线）。在一侧走完从墙边出发时左转前使用（出发时）
 void Back_Front_Start(int Line_Count) {            
   int Temp_Count = 0;                     // 当前所在线数
 	int flag = 0;                           // 开始计数标志
@@ -395,7 +395,7 @@ void Back_Front_Start(int Line_Count) {
 }
 
 
-// 巡线后退 n 根线（前七路数线）。在从基地出发时左转前使用
+// 巡线后退 n 根线（前七路数线）。在一侧走完从墙边出发时左转前使用（一侧走完时）
 void Back_Front(int Line_Count) {            
   int Temp_Count = 0;                     // 当前所在线数
 	int flag = 0;                           // 开始计数标志

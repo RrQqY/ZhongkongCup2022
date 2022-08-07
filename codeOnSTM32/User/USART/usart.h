@@ -107,17 +107,16 @@
 
 
 // 舵机控制指令宏定义
-#define FRAME_HEADER             0x55     //帧头
-#define CMD_SERVO_MOVE           0x03     //舵机移动指令
-#define CMD_ACTION_GROUP_RUN     0x06     //运行动作组指令
-#define CMD_ACTION_GROUP_STOP    0x07     //停止动作组指令
-#define CMD_ACTION_GROUP_SPEED   0x0B     //设置动作组运行速度
-#define CMD_GET_BATTERY_VOLTAGE  0x0F     //获取电池电压指令
+#define FRAME_HEADER             0x55     // 帧头
+#define CMD_SERVO_MOVE           0x03     // 舵机移动指令
+#define CMD_ACTION_GROUP_RUN     0x06     // 运行动作组指令
+#define CMD_ACTION_GROUP_STOP    0x07     // 停止动作组指令
+#define CMD_ACTION_GROUP_SPEED   0x0B     // 设置动作组运行速度
+#define CMD_GET_BATTERY_VOLTAGE  0x0F     // 获取电池电压指令
 
 
 #define GET_LOW_BYTE(A) ((uint8_t)(A))            //宏函数 获得A的低八位
 #define GET_HIGH_BYTE(A) ((uint8_t)((A) >> 8))    //宏函数 获得A的高八位
-
 
 
 // 舵机驱动函数封装
@@ -128,18 +127,18 @@
 															14：上翻650， 下翻1650；
 	 15：翻斗大舵机             15：上翻1450，下翻：600
 	*/
-#define MoveSrv1(up) up>0 ? MoveServo(1, 500, 750)  : MoveServo(1, 500, 2500)     // 上层臂右左中
+#define MoveSrv1(up) up>0 ? MoveServo(1, 500, 750)  : MoveServo(1, 500, 2500)       // 上层臂右左中
 #define MoveSrv2(up) up>0 ? MoveServo(2, 500, 800)  : MoveServo(2, 500, 2600)
 #define MoveSrv3(up) up>0 ? MoveServo(3, 500, 2200) : MoveServo(3, 500, 450)
-#define MoveSrv4(up) up>0 ? MoveServo(4, 500, 650)  : MoveServo(4, 500, 2600)     // 下层臂右左中
+#define MoveSrv4(up) up>0 ? MoveServo(4, 500, 650)  : MoveServo(4, 500, 2600)       // 下层臂右左中
 #define MoveSrv5(up) up>0 ? MoveServo(5, 500, 600) : MoveServo(5, 500, 2400)
 #define MoveSrv6(up) up>0 ? MoveServo(6, 500, 2350) : MoveServo(6, 500, 400)
 
-#define MoveSrv7(up) up>0  ? MoveServo(7, 500, 950) : MoveServo(7, 500, 1550)    // 上层臂大舵机
-#define MoveSrv15(up) up>0 ? MoveServo(15, 500, 1200) : MoveServo(15, 500, 500)   // 翻斗大舵机
+#define MoveSrv7(up) up>0  ? MoveServo(7, 500, 950) : MoveServo(7, 500, 1550)       // 上层臂大舵机
+#define MoveSrv15(up) up>0 ? MoveServo(15, 500, 1200) : MoveServo(15, 500, 500)     // 翻斗大舵机
 
-#define MoveSrv13(up) up>0 ? MoveServo(13, 500, 1550) : MoveServo(13, 500, 525)   // 左装夹臂
-#define MoveSrv14(up) up>0 ? MoveServo(14, 500, 650)  : MoveServo(14, 500, 1500)  // 右装夹臂
+#define MoveSrv13(up) up>0 ? MoveServo(13, 500, 1550) : MoveServo(13, 500, 525)     // 左装夹臂
+#define MoveSrv14(up) up>0 ? MoveServo(14, 500, 650)  : MoveServo(14, 500, 1500)    // 右装夹臂
 
 
 void USART_Config(void);                                                      // USART 及相关 GPIO 配置
@@ -147,16 +146,15 @@ void Usart_SendByte( USART_TypeDef * pUSARTx, uint8_t ch);                    //
 void Usart_SendArray( USART_TypeDef * pUSARTx, uint8_t *array, uint16_t num); // 发送8位的数组
 void Usart_SendString( USART_TypeDef * pUSARTx, char *str);                   // 发送字符串
 void Usart_SendHalfWord( USART_TypeDef * pUSARTx, uint16_t ch);               // 发送一个16进制数
-
 void UartWriteBuf(uint8_t *buf, uint8_t len);                                 // 向舵机控制板写入指令集
 void MoveServo(uint8_t servoID, uint16_t Time, uint16_t Position);            // 控制单个舵机转动
 void MoveServos(uint8_t Num, uint16_t Time, ...);                             // 控制多个舵机转动
-void NanoStart();                                                             // 向nano发送起始信号
 void IMU_Put_Char(unsigned char DataToSend);
 void IMU_sendcmd(char cmd[]);
 void IMU_Put_String(unsigned char *Str);
 void CopeSerial2Data(unsigned char ucData);
 void *memcpy(void *str1, const void *str2, size_t n);
-void NanoCatch();
+void NanoStart();                                                             // 串口向nano发送起始信号（已废弃）
+void NanoCatch();                                                             // 用nano获取的信号控制爪子的伸出（已废弃）
 
 #endif

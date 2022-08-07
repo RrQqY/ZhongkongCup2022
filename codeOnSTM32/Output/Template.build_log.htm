@@ -27,7 +27,174 @@ Project File Date:  02/10/2022
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'LCD'
-"..\..\Output\Template.axf" - 0 Error(s), 0 Warning(s).
+compiling usart.c...
+..\..\User\USART\usart.h(157): warning:  #1295-D: Deprecated declaration NanoStart - give arg types
+  void NanoStart();                                                             // 串口向nano发送起始信号（已废弃）
+..\..\User\USART\usart.h(158): warning:  #1295-D: Deprecated declaration NanoCatch - give arg types
+  void NanoCatch();                                                             // 用nano获取的信号控制爪子的伸出（已废弃）
+..\..\User\AdvanceTim\AdvanceTim.h(116): warning:  #1295-D: Deprecated declaration ADVANCE_TIM_Init - give arg types
+  void ADVANCE_TIM_Init();                             // TIM 总初始化
+..\..\User\main.h(44): warning:  #1295-D: Deprecated declaration NanoIOHigh - give arg types
+  extern void NanoIOHigh();                // 给Nano发信号（已废弃）
+..\..\User\main.h(45): warning:  #1295-D: Deprecated declaration NanoIOHigh1 - give arg types
+  extern void NanoIOHigh1();               // 第一次给Nano发信号（01），拍照片
+..\..\User\main.h(46): warning:  #1295-D: Deprecated declaration NanoIOHigh2 - give arg types
+  extern void NanoIOHigh2();               // 第二次给Nano发信号（10），爪子张开
+..\..\User\main.h(47): warning:  #1295-D: Deprecated declaration NanoIOHigh3 - give arg types
+  extern void NanoIOHigh3();               // 第三次给Nano发信号（11），抓取
+..\..\User\main.h(54): warning:  #1295-D: Deprecated declaration Test1 - give arg types
+  extern void Test1();            // 1代方案测试
+..\..\User\main.h(55): warning:  #1295-D: Deprecated declaration Test2 - give arg types
+  extern void Test2();            // 2代方案测试
+..\..\User\main.h(56): warning:  #1295-D: Deprecated declaration OneSideAction - give arg types
+  extern void OneSideAction();    // 一侧货架的执行函数：向前走六格，每格进行一次识别、抓取操作
+..\..\User\main.h(57): warning:  #1295-D: Deprecated declaration OneGridAction - give arg types
+  extern void OneGridAction();    // 一格货架的执行函数：进行一次识别、抓取操作
+..\..\User\USART\usart.c(325): warning:  #1-D: last line of file ends without a newline
+  }
+..\..\User\USART\usart.c: 12 warnings, 0 errors
+compiling mpu6050.c...
+..\..\User\AdvanceTim\AdvanceTim.h(116): warning:  #1295-D: Deprecated declaration ADVANCE_TIM_Init - give arg types
+  void ADVANCE_TIM_Init();                             // TIM 总初始化
+..\..\User\USART\usart.h(157): warning:  #1295-D: Deprecated declaration NanoStart - give arg types
+  void NanoStart();                                                             // 串口向nano发送起始信号（已废弃）
+..\..\User\USART\usart.h(158): warning:  #1295-D: Deprecated declaration NanoCatch - give arg types
+  void NanoCatch();                                                             // 用nano获取的信号控制爪子的伸出（已废弃）
+..\..\User\main.h(44): warning:  #1295-D: Deprecated declaration NanoIOHigh - give arg types
+  extern void NanoIOHigh();                // 给Nano发信号（已废弃）
+..\..\User\main.h(45): warning:  #1295-D: Deprecated declaration NanoIOHigh1 - give arg types
+  extern void NanoIOHigh1();               // 第一次给Nano发信号（01），拍照片
+..\..\User\main.h(46): warning:  #1295-D: Deprecated declaration NanoIOHigh2 - give arg types
+  extern void NanoIOHigh2();               // 第二次给Nano发信号（10），爪子张开
+..\..\User\main.h(47): warning:  #1295-D: Deprecated declaration NanoIOHigh3 - give arg types
+  extern void NanoIOHigh3();               // 第三次给Nano发信号（11），抓取
+..\..\User\main.h(54): warning:  #1295-D: Deprecated declaration Test1 - give arg types
+  extern void Test1();            // 1代方案测试
+..\..\User\main.h(55): warning:  #1295-D: Deprecated declaration Test2 - give arg types
+  extern void Test2();            // 2代方案测试
+..\..\User\main.h(56): warning:  #1295-D: Deprecated declaration OneSideAction - give arg types
+  extern void OneSideAction();    // 一侧货架的执行函数：向前走六格，每格进行一次识别、抓取操作
+..\..\User\main.h(57): warning:  #1295-D: Deprecated declaration OneGridAction - give arg types
+  extern void OneGridAction();    // 一格货架的执行函数：进行一次识别、抓取操作
+..\..\User\mpu6050\mpu6050.c: 11 warnings, 0 errors
+compiling I2C.c...
+..\..\User\AdvanceTim\AdvanceTim.h(116): warning:  #1295-D: Deprecated declaration ADVANCE_TIM_Init - give arg types
+  void ADVANCE_TIM_Init();                             // TIM 总初始化
+..\..\User\USART\usart.h(157): warning:  #1295-D: Deprecated declaration NanoStart - give arg types
+  void NanoStart();                                                             // 串口向nano发送起始信号（已废弃）
+..\..\User\USART\usart.h(158): warning:  #1295-D: Deprecated declaration NanoCatch - give arg types
+  void NanoCatch();                                                             // 用nano获取的信号控制爪子的伸出（已废弃）
+..\..\User\main.h(44): warning:  #1295-D: Deprecated declaration NanoIOHigh - give arg types
+  extern void NanoIOHigh();                // 给Nano发信号（已废弃）
+..\..\User\main.h(45): warning:  #1295-D: Deprecated declaration NanoIOHigh1 - give arg types
+  extern void NanoIOHigh1();               // 第一次给Nano发信号（01），拍照片
+..\..\User\main.h(46): warning:  #1295-D: Deprecated declaration NanoIOHigh2 - give arg types
+  extern void NanoIOHigh2();               // 第二次给Nano发信号（10），爪子张开
+..\..\User\main.h(47): warning:  #1295-D: Deprecated declaration NanoIOHigh3 - give arg types
+  extern void NanoIOHigh3();               // 第三次给Nano发信号（11），抓取
+..\..\User\main.h(54): warning:  #1295-D: Deprecated declaration Test1 - give arg types
+  extern void Test1();            // 1代方案测试
+..\..\User\main.h(55): warning:  #1295-D: Deprecated declaration Test2 - give arg types
+  extern void Test2();            // 2代方案测试
+..\..\User\main.h(56): warning:  #1295-D: Deprecated declaration OneSideAction - give arg types
+  extern void OneSideAction();    // 一侧货架的执行函数：向前走六格，每格进行一次识别、抓取操作
+..\..\User\main.h(57): warning:  #1295-D: Deprecated declaration OneGridAction - give arg types
+  extern void OneGridAction();    // 一格货架的执行函数：进行一次识别、抓取操作
+..\..\User\I2C\I2C.c: 11 warnings, 0 errors
+compiling main.c...
+..\..\User\AdvanceTim\AdvanceTim.h(116): warning:  #1295-D: Deprecated declaration ADVANCE_TIM_Init - give arg types
+  void ADVANCE_TIM_Init();                             // TIM 总初始化
+..\..\User\USART\usart.h(157): warning:  #1295-D: Deprecated declaration NanoStart - give arg types
+  void NanoStart();                                                             // 串口向nano发送起始信号（已废弃）
+..\..\User\USART\usart.h(158): warning:  #1295-D: Deprecated declaration NanoCatch - give arg types
+  void NanoCatch();                                                             // 用nano获取的信号控制爪子的伸出（已废弃）
+..\..\User\main.h(44): warning:  #1295-D: Deprecated declaration NanoIOHigh - give arg types
+  extern void NanoIOHigh();                // 给Nano发信号（已废弃）
+..\..\User\main.h(45): warning:  #1295-D: Deprecated declaration NanoIOHigh1 - give arg types
+  extern void NanoIOHigh1();               // 第一次给Nano发信号（01），拍照片
+..\..\User\main.h(46): warning:  #1295-D: Deprecated declaration NanoIOHigh2 - give arg types
+  extern void NanoIOHigh2();               // 第二次给Nano发信号（10），爪子张开
+..\..\User\main.h(47): warning:  #1295-D: Deprecated declaration NanoIOHigh3 - give arg types
+  extern void NanoIOHigh3();               // 第三次给Nano发信号（11），抓取
+..\..\User\main.h(54): warning:  #1295-D: Deprecated declaration Test1 - give arg types
+  extern void Test1();            // 1代方案测试
+..\..\User\main.h(55): warning:  #1295-D: Deprecated declaration Test2 - give arg types
+  extern void Test2();            // 2代方案测试
+..\..\User\main.h(56): warning:  #1295-D: Deprecated declaration OneSideAction - give arg types
+  extern void OneSideAction();    // 一侧货架的执行函数：向前走六格，每格进行一次识别、抓取操作
+..\..\User\main.h(57): warning:  #1295-D: Deprecated declaration OneGridAction - give arg types
+  extern void OneGridAction();    // 一格货架的执行函数：进行一次识别、抓取操作
+..\..\User\main.c: 11 warnings, 0 errors
+compiling stm32f10x_it.c...
+..\..\User\AdvanceTim\AdvanceTim.h(116): warning:  #1295-D: Deprecated declaration ADVANCE_TIM_Init - give arg types
+  void ADVANCE_TIM_Init();                             // TIM 总初始化
+..\..\User\USART\usart.h(157): warning:  #1295-D: Deprecated declaration NanoStart - give arg types
+  void NanoStart();                                                             // 串口向nano发送起始信号（已废弃）
+..\..\User\USART\usart.h(158): warning:  #1295-D: Deprecated declaration NanoCatch - give arg types
+  void NanoCatch();                                                             // 用nano获取的信号控制爪子的伸出（已废弃）
+..\..\User\main.h(44): warning:  #1295-D: Deprecated declaration NanoIOHigh - give arg types
+  extern void NanoIOHigh();                // 给Nano发信号（已废弃）
+..\..\User\main.h(45): warning:  #1295-D: Deprecated declaration NanoIOHigh1 - give arg types
+  extern void NanoIOHigh1();               // 第一次给Nano发信号（01），拍照片
+..\..\User\main.h(46): warning:  #1295-D: Deprecated declaration NanoIOHigh2 - give arg types
+  extern void NanoIOHigh2();               // 第二次给Nano发信号（10），爪子张开
+..\..\User\main.h(47): warning:  #1295-D: Deprecated declaration NanoIOHigh3 - give arg types
+  extern void NanoIOHigh3();               // 第三次给Nano发信号（11），抓取
+..\..\User\main.h(54): warning:  #1295-D: Deprecated declaration Test1 - give arg types
+  extern void Test1();            // 1代方案测试
+..\..\User\main.h(55): warning:  #1295-D: Deprecated declaration Test2 - give arg types
+  extern void Test2();            // 2代方案测试
+..\..\User\main.h(56): warning:  #1295-D: Deprecated declaration OneSideAction - give arg types
+  extern void OneSideAction();    // 一侧货架的执行函数：向前走六格，每格进行一次识别、抓取操作
+..\..\User\main.h(57): warning:  #1295-D: Deprecated declaration OneGridAction - give arg types
+  extern void OneGridAction();    // 一格货架的执行函数：进行一次识别、抓取操作
+..\..\User\stm32f10x_it.c(209): warning:  #177-D: variable "ZERO_OFFSET_COUN"  was declared but never referenced
+  	static const int ZERO_OFFSET_COUN = (1 / dt);     // 1/8 = 125次每秒
+..\..\User\stm32f10x_it.c: 12 warnings, 0 errors
+compiling Move.c...
+..\..\User\AdvanceTim\AdvanceTim.h(116): warning:  #1295-D: Deprecated declaration ADVANCE_TIM_Init - give arg types
+  void ADVANCE_TIM_Init();                             // TIM 总初始化
+..\..\User\USART\usart.h(157): warning:  #1295-D: Deprecated declaration NanoStart - give arg types
+  void NanoStart();                                                             // 串口向nano发送起始信号（已废弃）
+..\..\User\USART\usart.h(158): warning:  #1295-D: Deprecated declaration NanoCatch - give arg types
+  void NanoCatch();                                                             // 用nano获取的信号控制爪子的伸出（已废弃）
+..\..\User\main.h(44): warning:  #1295-D: Deprecated declaration NanoIOHigh - give arg types
+  extern void NanoIOHigh();                // 给Nano发信号（已废弃）
+..\..\User\main.h(45): warning:  #1295-D: Deprecated declaration NanoIOHigh1 - give arg types
+  extern void NanoIOHigh1();               // 第一次给Nano发信号（01），拍照片
+..\..\User\main.h(46): warning:  #1295-D: Deprecated declaration NanoIOHigh2 - give arg types
+  extern void NanoIOHigh2();               // 第二次给Nano发信号（10），爪子张开
+..\..\User\main.h(47): warning:  #1295-D: Deprecated declaration NanoIOHigh3 - give arg types
+  extern void NanoIOHigh3();               // 第三次给Nano发信号（11），抓取
+..\..\User\main.h(54): warning:  #1295-D: Deprecated declaration Test1 - give arg types
+  extern void Test1();            // 1代方案测试
+..\..\User\main.h(55): warning:  #1295-D: Deprecated declaration Test2 - give arg types
+  extern void Test2();            // 2代方案测试
+..\..\User\main.h(56): warning:  #1295-D: Deprecated declaration OneSideAction - give arg types
+  extern void OneSideAction();    // 一侧货架的执行函数：向前走六格，每格进行一次识别、抓取操作
+..\..\User\main.h(57): warning:  #1295-D: Deprecated declaration OneGridAction - give arg types
+  extern void OneGridAction();    // 一格货架的执行函数：进行一次识别、抓取操作
+..\..\User\Move\Move.c(89): warning:  #111-D: statement is unreachable
+  						correct_count = 0;
+..\..\User\Move\Move.c(113): warning:  #111-D: statement is unreachable
+  						correct_count = 0;
+..\..\User\Move\Move.c(541): warning:  #111-D: statement is unreachable
+  						correct_count = 0;
+..\..\User\Move\Move.c(565): warning:  #111-D: statement is unreachable
+  						correct_count = 0;
+..\..\User\Move\Move.c(1203): warning:  #111-D: statement is unreachable
+  						correct_count = 0;
+..\..\User\Move\Move.c(1227): warning:  #111-D: statement is unreachable
+  						correct_count = 0;
+..\..\User\Move\Move.c(1619): warning:  #111-D: statement is unreachable
+  						correct_count = 0;
+..\..\User\Move\Move.c(1643): warning:  #111-D: statement is unreachable
+  						correct_count = 0;
+..\..\User\Move\Move.c: 19 warnings, 0 errors
+linking...
+Program Size: Code=17020 RO-data=15536 RW-data=612 ZI-data=1780  
+FromELF: creating hex file...
+"..\..\Output\Template.axf" - 0 Error(s), 76 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -41,7 +208,7 @@ Package Vendor: Keil
   D:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:00
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>

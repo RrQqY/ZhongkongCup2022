@@ -14,6 +14,7 @@
 #include "I2C.h"
 #include "mpu6050.h"
 
+
 #define Delay(time)   SysTick_Delay_ms(time);    // 等待毫秒
 #define SevenTotal(a, b, c, d, e, f, g)   a*1000000 + b*100000 + c*10000 + d*1000 + e*100 + f*10 + g    // 将七路信息一起输出的宏定义函数
 
@@ -35,20 +36,20 @@ extern float Temp;
 extern float gyroX, gyroY, gyroZ;        // 三轴角速度的全局变量
 extern short Angle[3];                   // 陀螺仪角度的全局变量
 extern float integralX, integralY, integralZ;             // 累计偏角
-extern int g_GetZeroOffset;              // 零偏
-extern int task_readdata_finish;         // 读取MPU6050数据标志
-extern int POS[6];                       // 上位机返回抓取位置信息
+extern int   g_GetZeroOffset;            // 零偏
+extern int   task_readdata_finish;       // 读取MPU6050数据标志
+extern int   POS[6];                     // 上位机返回抓取位置信息
 extern uint8_t Nano_Buff[8];
-extern int flag_get;
+extern int  flag_get;
 extern void NanoIOHigh();                // 给Nano发信号（已废弃）
-extern void NanoIOHigh1();               // 第一次给Nano发信号，拍照片
-extern void NanoIOHigh2();               // 第二次给Nano发信号，爪子张开
-extern void NanoIOHigh3();               // 第三次给Nano发信号，抓取
+extern void NanoIOHigh1();               // 第一次给Nano发信号（01），拍照片
+extern void NanoIOHigh2();               // 第二次给Nano发信号（10），爪子张开
+extern void NanoIOHigh3();               // 第三次给Nano发信号（11），抓取
 static void LCD_Test(void);	
 extern void LCD_Printn(int line, uint32_t num);            // LCD 屏显示数字
 extern void LCD_Prints(int line, char dispBuff[]);         // LCD 屏显示英文字符串
 extern uint16_t lcdid;
-extern uint8_t time_now;                                   // 开机到现在的运行时间
+extern uint8_t  time_now;                                  // 开机到现在的运行时间
 
 extern void Test1();            // 1代方案测试
 extern void Test2();            // 2代方案测试

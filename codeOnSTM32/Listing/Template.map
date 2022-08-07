@@ -2403,7 +2403,7 @@ Image component sizes
         84         10      15200         25          0       2563   fonts.o
       1636         90          0          0          0       4326   gpio.o
        454         36          0          0          0       4854   i2c.o
-      1244         90          0        192        280     230151   main.o
+      1244         90          0        192        280     230139   main.o
        132         22          0          0          0       1835   misc.o
       3428        414          0        296         96      11039   move.o
        310          8          0          0          0       3243   mpu6050.o
@@ -2419,7 +2419,7 @@ Image component sizes
        786         84          0          5        378       5421   usart.o
 
     ----------------------------------------------------------------------
-     14208       1290      15536        608       1780     606447   Object Totals
+     14208       1290      15536        608       1780     606435   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         26          0          0          9          2          0   (incl. Padding)
 
@@ -2484,8 +2484,8 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     17020       1326      15536        612       1780     601055   Grand Totals
-     17020       1326      15536         84       1780     601055   ELF Image Totals (compressed)
+     17020       1326      15536        612       1780     601043   Grand Totals
+     17020       1326      15536         84       1780     601043   ELF Image Totals (compressed)
      17020       1326      15536         84          0          0   ROM Totals
 
 ==============================================================================

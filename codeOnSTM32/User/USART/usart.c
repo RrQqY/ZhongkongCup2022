@@ -306,14 +306,14 @@ void MoveServos(uint8_t Num, uint16_t Time, ...)
 
 
 /*-------- NANO 通信函数 --------*/
-// 串口向nano发送起始信号
+// 串口向nano发送起始信号（已废弃）
 void NanoStart()
 {
 	Usart_SendByte(NANO_USARTx, 1);
 }
 
 
-// 用nano获取的信号控制爪子的伸出
+// 用nano获取的信号控制爪子的伸出（已废弃）
 void NanoCatch()
 {
 	if(Nano_Read(1) != 0){MoveSrv1(1);}

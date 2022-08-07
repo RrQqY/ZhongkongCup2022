@@ -22,9 +22,9 @@
 #define PreSlow             42            // 数到线前提前减速
 
 // PID参数宏定义                      
-#define KP    10
-#define KI    1
-#define KD    0
+#define KP        10
+#define KI        1
+#define KD        0
 
 // 侧面三灰度PID参数宏定义
 #define KP_grab   10
@@ -32,35 +32,41 @@
 #define KD_grab   0
 
 
-static int correct_count;            // 校准次数
+static int correct_count;                // 校准次数
 
+// PID部分
+void PID(void);                          // PID 巡线
+void PIDBack(void);                      // 后退 PID 巡线
+void PIDBack_Start(void);                // 倒着 PID 巡线（出发时）
+void PID_grab(void);                     // 侧三路灰度 PID 巡线
 
-void PID(void);                      // PID 巡线
-void PIDBack(void);                  // 后退 PID 巡线
-void PIDBack_Start(void);            // 倒着 PID 巡线（开始）
-void PID_grab(void);                 // 侧三路灰度 PID 巡线
-void Forward(int Line_Count);        // 巡线直行 n 根线
-void Back(int Line_Count);           // 巡线后退 n 根线
-void Forward_Front(int Line_Count);  // 巡线直行 n 根线（前七路数线）。在1代方案中走到货架前时使用
-void Back_Front(int Line_Count);     // 巡线后退 n 根线（前七路数线）。在从基地出发时左转前使用
-void Back_Front_Start(int Line_Count);     // 巡线后退 n 根线（前七路数线）。在从基地出发时左转前使用
-void Front_Back(int Line_Count);     // 前进 n 根线（后七路数线，不巡线）。在一侧货架走完，撞墙后后退时使用
-void Back_Slide(int Line_Count);     // 靠侧面三灰度巡线直行 n 根线
-void Right(void);                    // 右转
-void Left(void);                     // 左转
-//void Stop(void);                   // 停止
-void Stop_Forward(void);             // 直行时的停止
-void Stop_Back(void);                // 后退时的停止
-void Stop_Left(void);                // 左转时的停止
-void Stop_Right(void);               // 右转时的停止
-void Right_MPU(int angle);           // 利用MPU6050右转
-void Left_MPU(int angle);            // 利用MPU6050左转
-void TrunTo_MPU(int angle);          // 利用MPU6050转到特定角度
-void SlideOut(void);                 // 伸出滑轨
-void SlideIn(void);                  // 收回滑轨
-void TrackMove(void);                // 履带转动
-void TrackStop(void);                // 履带停止
-void Catch(void);                    // 完成一次抓取
+// 行走部分
+void Forward(int Line_Count);            // 巡线直行 n 根线
+void Back(int Line_Count);               // 巡线后退 n 根线
+void Forward_Front(int Line_Count);      // 巡线直行 n 根线（前七路数线）。在1代方案中走到货架前时使用
+void Back_Front(int Line_Count);         // 巡线后退 n 根线（前七路数线）。在一侧走完从墙边出发时左转前使用（一侧走完时）
+void Back_Front_Start(int Line_Count);   // 巡线后退 n 根线（前七路数线）。在一侧走完从墙边出发时左转前使用（出发时）
+void Front_Back(int Line_Count);         // 前进 n 根线（后七路数线，不巡线）。在一侧货架走完，撞墙后后退时使用
+void Back_Slide(int Line_Count);         // 靠侧面三灰度巡线直行 n 根线
+//void Stop(void);                       // 停止
+void Stop_Forward(void);                 // 直行时的停止
+void Stop_Back(void);                    // 后退时的停止
+void Stop_Left(void);                    // 左转时的停止
+void Stop_Right(void);                   // 右转时的停止
+
+// 转向部分
+void Right(void);                        // 右转
+void Left(void);                         // 左转
+void Right_MPU(int angle);               // 利用MPU6050右转
+void Left_MPU(int angle);                // 利用MPU6050左转
+void TrunTo_MPU(int angle);              // 利用MPU6050转到特定角度
+
+// 其他动作部分
+void SlideOut(void);                     // 伸出滑轨
+void SlideIn(void);                      // 收回滑轨
+void TrackMove(void);                    // 履带转动
+void TrackStop(void);                    // 履带停止
+void Catch(void);                        // 完成一次抓取
 
 
 #endif
